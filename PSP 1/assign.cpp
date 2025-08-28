@@ -258,7 +258,7 @@ int main()
 				}
 			} while (choice != 'n' && choice != 'N');
 
-
+			invoice();
 
 
 
