@@ -16,7 +16,7 @@ char choice;
 
 int train_no[3] = { 1,2,3 };
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
-double fare[] = { 50,56,96 };
+double fare[] = { 50.00,56.00,96.00 };
 
 
 void Menu() {
@@ -103,6 +103,8 @@ void ticket()
 	int trainno, deptime, deptime1, deptime2, pax, time1 = 0;
 	double money = 0.0;
 	string date1;
+	int trainnum[10];
+	int numofpax[100];
 
 	cout << "AVAILABLE TRAIN:\n\n";
 	cout << left << setw(10) << "=========================================" << endl;
@@ -115,6 +117,7 @@ void ticket()
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
+	trainnum[0] = trainno;
 	cout << endl;
 
 	switch (trainno) {
@@ -196,6 +199,7 @@ void ticket()
 	cin >> date1;
 	cout << "Number of pax : ";
 	cin >> pax;
+	numofpax[0] = pax;
 
 	cout << "\nTICKET CONFIRMATION" << endl;
 	cout << "--------------------" << endl;
@@ -211,9 +215,13 @@ void ticket()
 	cout << "Number of pax : " << pax << endl;
 }
 
-void invoice()
+double invoice()
 {
+	double total = 0.0, amount = 0.0, amount1 = 0.0, tax1 = 0.0;
 
+	cout << "INVOICE SUMMARY\n";
+	cout << "==================\n";
+	cout << trainnum << 
 }
 
 
