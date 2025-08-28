@@ -142,10 +142,13 @@ void ticket()
 		}
 		break;
 	case 2:
-		cout << left << setw(5) << "NO" << setw(15) << "DEPARTURE TIME" << setw(15) << "MIN.FARE" << endl;
-		cout << left << setw(5) << "1" << setw(15) << "10:00AM" << setw(15) << "RM 50.00" << endl;
-		cout << left << setw(5) << "2" << setw(15) << "13:00PM" << setw(15) << "RM 50.00" << endl;
-		cout << left << setw(5) << "3" << setw(15) << "16:00PM" << setw(15) << "RM 50.00" << endl;
+		cout << left << setw(5) << "==================================" << endl;
+		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
+		cout << left << setw(5) << "----------------------------------" << endl;
+		cout << left << setw(5) << "| 1  | 10:00AM        | RM 50.00 |" << endl;
+		cout << left << setw(5) << "| 2  | 13:00PM        | RM 50.00 |" << endl;
+		cout << left << setw(5) << "| 3  | 16:00PM        | RM 50.00 |" << endl;
+		cout << left << setw(5) << "==================================" << endl;
 		cout << "\nPlease choose your departure time : ";
 		cin >> deptime1;
 		if (deptime1 == 1) {
@@ -162,10 +165,13 @@ void ticket()
 		}
 		break;
 	case 3:
-		cout << left << setw(5) << "NO" << setw(15) << "DEPARTURE TIME" << setw(15) << "MIN.FARE" << endl;
-		cout << left << setw(5) << "1" << setw(15) << "11:00AM" << setw(15) << "RM 56.00" << endl;
-		cout << left << setw(5) << "2" << setw(15) << "14:00PM" << setw(15) << "RM 56.00" << endl;
-		cout << left << setw(5) << "3" << setw(15) << "16:00PM" << setw(15) << "RM 56.00" << endl;
+		cout << left << setw(5) << "==================================" << endl;
+		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
+		cout << left << setw(5) << "----------------------------------" << endl;
+		cout << left << setw(5) << "| 1  | 11:00AM        | RM 56.00 |" << endl;
+		cout << left << setw(5) << "| 2  | 14:00PM        | RM 56.00 |" << endl;
+		cout << left << setw(5) << "| 3  | 16:00PM        | RM 56.00 |" << endl;
+		cout << left << setw(5) << "==================================" << endl;
 		cout << "\nPlease choose your departure time : ";
 		cin >> deptime2;
 		if (deptime2 == 1) {
