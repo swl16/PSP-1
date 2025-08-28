@@ -228,31 +228,21 @@ int main()
 			ticket();
 
 			do {
-				cout << "\nPlease confirm your ticket is correct(Y/N) : ";
-				cin >> choice;
-				cout << endl;
-
-				if (choice == 'n' || choice == 'N') {
-					ticket();
-				}
-				else if (choice == 'y' || choice == 'Y') {
-					break;
-				}
-				else {
-					cout << "Invalid" << endl;
-				}
-			} while (choice != 'Y' && choice != 'y');
-
-			do {
 				cout << "Do you need to add on?(Y/N) : ";
 				cin >> choice;
 				cout << endl;
 
 				if (choice == 'y' || choice == 'Y') {
 					ticket();
-
+				}
+				else if (choice == 'N' || choice == 'n') {
+					break;
+				}
+				else {
+					cout << "Invalid" << endl;
 				}
 			} while (choice != 'n' && choice != 'N');
+
 
 
 
