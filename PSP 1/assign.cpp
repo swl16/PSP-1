@@ -233,7 +233,7 @@ int main()
 			ticket();
 
 			do {
-				cout << "Do you need to add on?(Y/N) : ";
+				cout << "\nDo you need to add on?(Y/N) : ";
 				cin >> choice;
 				cout << endl;
 
