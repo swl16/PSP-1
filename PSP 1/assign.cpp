@@ -224,6 +224,8 @@ double invoice()
 	cout << "INVOICE SUMMARY\n";
 	cout << "==================\n";
 	cout << train_no << setfill(' ') << setw(10) << "x " << numofpax << setfill(' ') << setw(10) <<"RM " << amount;
+
+	return amount;
 }
 
 
