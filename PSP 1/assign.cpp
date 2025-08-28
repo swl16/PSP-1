@@ -105,10 +105,12 @@ void ticket()
 	string date1;
 
 	cout << "AVAILABLE TRAIN:\n\n";
-	cout << left << setw(10) << "Train No" << setw(15) << "ORIGIN" << setw(15) << "DESTINATION" << endl;
-	cout << left << setw(10) << "001" << setw(15) << "Kuala Lumpur" << setw(15) << "Butterworth" << endl;
-	cout << left << setw(10) << "002" << setw(15) << "Kajang" << setw(15) << "JB Sentral" << endl;
-	cout << left << setw(10) << "003" << setw(15) << "KL Sentral" << setw(15) << "Ipoh" << endl;
+	cout << left << setw(10) << "===============================================================================" << endl;
+	cout << left << setw(10) << "| Train No" << setw(15) << "| ORIGIN" << setw(15) << "| DESTINATION |" << endl;
+	cout << left << setw(10) << "| 001" << setw(15) << "| Kuala Lumpur" << setw(15) << "| Butterworth |" << endl;
+	cout << left << setw(10) << "| 002" << setw(15) << "| Kajang" << setw(15) << "| JB Sentral |" << endl;
+	cout << left << setw(10) << "| 003" << setw(15) << "| KL Sentral" << setw(15) << "| Ipoh |" << endl;
+	cout << left << setw(10) << "===============================================================================" << endl;
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
@@ -212,10 +214,52 @@ int main()
 		cin >> menu_choose;
 
 		if (menu_choose == 1) {
-			ticket();
-			do {
 
+			ticket();
+
+			do {
+				cout << "\nPlease confirm your ticket is correct(Y/N) : ";
+				cin >> choice;
+				cout << endl;
+
+				if (choice == 'n' || choice == 'N') {
+					ticket();
+				}
+				else if (choice == 'y' || choice == 'Y') {
+					break;
+				}
+				else {
+					cout << "Invalid" << endl;
+				}
 			} while (choice != 'Y' && choice != 'y');
+
+			do {
+				cout << "Do you need to add on?(Y/N) : ";
+				cin >> choice;
+				cout << endl;
+
+				if (choice == 'y' || choice == 'Y') {
+					ticket();
+
+				}
+			} while (choice != 'n' && choice != 'N');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		}
 		else if (menu_choose == 2) {
