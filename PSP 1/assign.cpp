@@ -105,12 +105,12 @@ void ticket()
 	string date1;
 
 	cout << "AVAILABLE TRAIN:\n\n";
-	cout << left << setw(10) << "===============================================================================" << endl;
-	cout << left << setw(10) << "| Train No" << setw(15) << "| ORIGIN" << setw(15) << "| DESTINATION |" << endl;
-	cout << left << setw(10) << "| 001" << setw(15) << "| Kuala Lumpur" << setw(15) << "| Butterworth |" << endl;
-	cout << left << setw(10) << "| 002" << setw(15) << "| Kajang" << setw(15) << "| JB Sentral |" << endl;
-	cout << left << setw(10) << "| 003" << setw(15) << "| KL Sentral" << setw(15) << "| Ipoh |" << endl;
-	cout << left << setw(10) << "===============================================================================" << endl;
+	cout << left << setw(10) << "======================================================================" << endl;
+	cout << left << setw(10) << "| Train No" << setw(15) << " | ORIGIN" << setw(15) << "| DESTINATION |" << endl;
+	cout << left << setw(10) << "| 001" << setw(15) << " | Kuala Lumpur" << setw(15) << "| Butterworth |" << endl;
+	cout << left << setw(10) << "| 002" << setw(15) << " | Kajang" << setw(15) << "| JB Sentral        |" << endl;
+	cout << left << setw(10) << "| 003" << setw(15) << " | KL Sentral" << setw(15) << "| Ipoh          |" << endl;
+	cout << left << setw(10) << "======================================================================" << endl;
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
