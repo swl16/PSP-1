@@ -100,7 +100,7 @@ void user() {
 
 void ticket()
 {
-	int trainno, trainno1, deptime, deptime1, deptime2, pax, pax1, time1 = 0;
+	int trainno, deptime, deptime1, deptime2, pax, time1 = 0;
 	double money = 0.0;
 	string date1;
 
@@ -209,6 +209,11 @@ void ticket()
 	}
 	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
+}
+
+void invoice()
+{
+
 }
 
 
