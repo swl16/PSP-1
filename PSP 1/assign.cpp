@@ -14,7 +14,8 @@ int orderhistory[trainnum] = { 0 };
 
 char choice;
 
-int train_no[3] = { 1,2,3 };
+int train_no[10];
+int numofpax[100];
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
 
@@ -103,8 +104,6 @@ void ticket()
 	int trainno, deptime, deptime1, deptime2, pax, time1 = 0;
 	double money = 0.0;
 	string date1;
-	int trainnum[10];
-	int numofpax[100];
 
 	cout << "AVAILABLE TRAIN:\n\n";
 	cout << left << setw(10) << "=========================================" << endl;
@@ -117,7 +116,7 @@ void ticket()
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
-	trainnum[0] = trainno;
+	train_no[0] = trainno;
 	cout << endl;
 
 	switch (trainno) {
@@ -213,15 +212,18 @@ void ticket()
 	}
 	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
+	cout << "Price : RM " << money << " per person" << endl;
 }
 
 double invoice()
 {
-	double total = 0.0, amount = 0.0, amount1 = 0.0, tax1 = 0.0;
+	double total = 0.0, amount = 0.0, amount1 = 0.0, tax1 = 0.0, money = 0.0;
+
+	amount = money * numofpax[0];
 
 	cout << "INVOICE SUMMARY\n";
 	cout << "==================\n";
-	cout << trainnum << 
+	cout << train_no << setfill(' ') << setw(10) << "x " << numofpax << setfill(' ') << setw(10) <<"RM " << amount;
 }
 
 
