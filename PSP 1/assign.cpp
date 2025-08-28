@@ -105,12 +105,12 @@ void ticket()
 	string date1;
 
 	cout << "AVAILABLE TRAIN:\n\n";
-	cout << left << setw(10) << "======================================================================" << endl;
-	cout << left << setw(10) << "| Train No" << setw(15) << " | ORIGIN" << setw(15) << "| DESTINATION |" << endl;
-	cout << left << setw(10) << "| 001" << setw(15) << " | Kuala Lumpur" << setw(15) << "| Butterworth |" << endl;
-	cout << left << setw(10) << "| 002" << setw(15) << " | Kajang" << setw(15) << "| JB Sentral        |" << endl;
-	cout << left << setw(10) << "| 003" << setw(15) << " | KL Sentral" << setw(15) << "| Ipoh          |" << endl;
-	cout << left << setw(10) << "======================================================================" << endl;
+	cout << left << setw(10) << "=========================================" << endl;
+	cout << left << setw(10) << "| Train No | ORIGIN       | DESTINATION |" << endl;
+	cout << left << setw(10) << "| 001      | Kuala Lumpur | Butterworth |" << endl;
+	cout << left << setw(10) << "| 002      | Kajang       | JB Sentral  |" << endl;
+	cout << left << setw(10) << "| 003      | KL Sentral   | Ipoh        |" << endl;
+	cout << left << setw(10) << "=========================================" << endl;
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
@@ -118,12 +118,12 @@ void ticket()
 
 	switch (trainno) {
 	case 1:
-		cout << left << setw(5) << "=====================================================================" << endl;
-		cout << left << setw(5) << "| NO" << setw(15) << "| DEPARTURE TIME | " << setw(15) << "MIN.FARE |" << endl;
-		cout << left << setw(5) << "| 1" << setw(15) << "| 10:00AM | " << setw(15) << "RM 96.00 |" << endl;
-		cout << left << setw(5) << "| 2" << setw(15) << "| 12:00PM | " << setw(15) << "RM 96.00 |" << endl;
-		cout << left << setw(5) << "| 3" << setw(15) << "| 15:00PM | " << setw(15) << "RM 96.00 |" << endl;
-		cout << left << setw(5) << "=====================================================================" << endl;
+		cout << left << setw(5) << "==================================" << endl;
+		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
+		cout << left << setw(5) << "| 1  | 10:00AM        | RM 96.00 |" << endl;
+		cout << left << setw(5) << "| 2  | 12:00PM        | RM 96.00 |" << endl;
+		cout << left << setw(5) << "| 3  | 15:00PM        | RM 96.00 |" << endl;
+		cout << left << setw(5) << "==================================" << endl;
 		cout << "\nPlease choose your departure time : ";
 		cin >> deptime;
 		if (deptime == 1) {
