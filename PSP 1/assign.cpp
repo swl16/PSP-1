@@ -2,7 +2,7 @@
 #include <string>
 #include <iomanip>
 #include<limits>
-#include<cctype>
+#include<chrono>
 #include<ctime>
 using namespace std;
 
@@ -18,6 +18,17 @@ int train_no[10];
 int numofpax[100];
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
+
+struct Order {
+	int trainno;
+	int deptime;
+	string date;
+	int pax;
+	double money;
+	double total;
+};
+Order orders[100];   // store up to 100 orders
+int orderCount = 0;
 
 
 void Menu() {
@@ -99,11 +110,12 @@ void user() {
 	cin.get();
 }
 
-void ticket()
+Order ticket()
 {
 	int trainno, deptime, deptime1, deptime2, pax, time1 = 0;
 	double money = 0.0;
 	string date1;
+	string ticketDetails[3];
 
 	cout << "AVAILABLE TRAIN:\n\n";
 	cout << left << setw(10) << "=========================================" << endl;
@@ -116,7 +128,6 @@ void ticket()
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
-	train_no[0] = trainno;
 	cout << endl;
 
 	switch (trainno) {
@@ -198,7 +209,15 @@ void ticket()
 	cin >> date1;
 	cout << "Number of pax : ";
 	cin >> pax;
-	numofpax[0] = pax;
+
+	Order newOrder;
+	newOrder.trainno = trainno;
+	newOrder.deptime = deptime;
+	newOrder.date = date1;
+	newOrder.pax = pax;
+	newOrder.money = money;
+
+	orders[orderCount++] = newOrder;
 
 	cout << "\nTICKET CONFIRMATION" << endl;
 	cout << "--------------------" << endl;
@@ -213,19 +232,100 @@ void ticket()
 	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
 	cout << "Price : RM " << money << " per person" << endl;
+
+	ticketDetails[0] = to_string(trainno);
+	ticketDetails[1] = to_string(pax);
+	ticketDetails[2] = to_string(money);
+
+	return newOrder;
 }
 
-double invoice()
+void invoice(const Order &o)
 {
-	double total = 0.0, amount = 0.0, amount1 = 0.0, tax1 = 0.0, money = 0.0;
+	double total = 0.0, amount = 0.0, tax1 = 0.0, processfee=0.0, subtotal=0.0;
+	int payment;
+	string method;
 
-	amount = money * numofpax[0];
+	amount = o.money * o.pax;
+	subtotal = amount;
+	processfee = subtotal + process;
+	tax1 = subtotal * tax;
+	total = subtotal + processfee + tax1;
 
 	cout << "INVOICE SUMMARY\n";
 	cout << "==================\n";
-	cout << train_no << setfill(' ') << setw(10) << "x " << numofpax << setfill(' ') << setw(10) <<"RM " << amount;
+	cout << o.trainno << setfill(' ') << setw(10) << "x " << o.pax << setfill(' ') << setw(10) <<"RM " << amount;
+	cout << "---------------------------------------------------------\n";
+	cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
+	cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
+	cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
+	cout << "---------------------------------------------------------\n";
+	cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
 
-	return amount;
+	cout << "\nPlease select your payment menthod." << endl;
+	cout << "1. E-wallet" << endl;
+	cout << "2. Credit card" << endl;
+	cout << "3. Debit card" << endl;
+	cout << "\nPlease select : ";
+	cin >> payment;
+	if (payment == 1) {
+		method = "E-wallet\n";
+	}
+	else if (payment == 2) {
+		method = "Credit card\n";
+	}
+	else if (payment == 3) {
+		method = "Debit card\n";
+	}
+
+	cout << endl;
+
+	auto now = chrono::system_clock::now();
+	time_t currentTime = chrono::system_clock::to_time_t(now);
+
+	// Use localtime_s (safe version for MSVC)
+	struct tm localTime;
+	localtime_s(&localTime, &currentTime);
+
+	cout << "    __________   ========  |      __      |   =====       \n";
+	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
+	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
+	cout << "  |           |     ||     |   |      |   |  |       |   \n";
+	cout << "   -----------      ||     |__|        |__|  |______/    \n";
+	cout << "    000   000                                          \n";
+	cout << "==============================================================\n";
+
+	cout << "Name : " << user_name << endl;
+	cout << "IC Number / Passport Number : " << ic_number << endl;
+	cout << "Phone Number : +60" << phone_number << endl;
+	cout << "Email : " << email << endl;
+
+	cout << "--------------------------------------------------------------\n";
+	cout << setw(10) << "RECEIPT" << endl;
+	cout << "--------------------------------------------------------------\n";
+	cout << "Receipt No : ";
+	cout << "Date : " << (1900 + localTime.tm_year) << "/"
+		<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
+
+	cout << endl;
+
+	cout << "1. Train No " << o.trainno << setw(10) << "x" << o.pax << setw(10) << "RM " << amount << endl;
+	cout << "---------------------------------------------------------\n";
+
+	cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
+	cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
+	cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
+
+	cout << "---------------------------------------------------------\n";
+	cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
+
+	cout << "\nPayment menthod : " << method << endl;
+
+	cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
+	cout << "------------------------------------------------------------------------------------\n";
+	cout << "Thank you. The QR code will be sent to your email after you complete the transaction.";
+	cout << "If you do not receive the email, please contact our customer service +60123456789 or email to abc123@gmail.com\n";
+
 }
 
 
@@ -242,7 +342,7 @@ int main()
 
 		if (menu_choose == 1) {
 
-			ticket();
+			Order first = ticket();
 
 			do {
 				cout << "\nDo you need to add on?(Y/N) : ";
@@ -250,7 +350,7 @@ int main()
 				cout << endl;
 
 				if (choice == 'y' || choice == 'Y') {
-					ticket();
+					Order extra = ticket();
 				}
 				else if (choice == 'N' || choice == 'n') {
 					break;
@@ -260,22 +360,7 @@ int main()
 				}
 			} while (choice != 'n' && choice != 'N');
 
-			invoice();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			invoice(first);
 
 
 		}
