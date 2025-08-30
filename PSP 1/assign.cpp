@@ -370,7 +370,7 @@ int main()
 			cout << "Payment menthod : " << method << endl;
 			cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 			cout << "------------------------------------------------------------------------------------\n";
-			cout << "Thank you. The QR code will be sent to your email after you complete the transaction.";
+			cout << "Thank you. The QR code will be sent to your email after you complete the transaction.\n";
 			cout << "If you do not receive the email, please contact our customer service +60123456789 or email to abc123@gmail.com\n";
 
 
