@@ -262,7 +262,7 @@ Order ticket()
 double invoice(int start, int end)
 {
 	double total = 0.0, amount = 0.0, tax1 = 0.0, subtotal=0.0;
-	int totalticket;
+	int totalticket=0;
 
 	for (int i = start;i < end;i++) {
 		amount = orders[i].money * orders[i].pax;
@@ -271,10 +271,8 @@ double invoice(int start, int end)
 		tax1 = subtotal * tax;
 		total = subtotal + process + tax1;
 
-		cout << "==================\n";
-		cout << "INVOICE SUMMARY\n";
-		cout << "==================\n";
 		cout << "Train No " << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
+	}
 		cout << "---------------------------------------------------------\n";
 		cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
 		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
@@ -282,7 +280,6 @@ double invoice(int start, int end)
 		cout << "---------------------------------------------------------\n";
 		cout << left << setw(30) << "Total Ticket : " <<  totalticket << endl;
 		cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
-	}
 	
 	return total;
 }
@@ -320,6 +317,10 @@ int main()
 					cout << "Invalid" << endl;
 				}
 			} while (choice != 'n' && choice != 'N');
+
+			cout << "==================\n";
+			cout << "INVOICE SUMMARY\n";
+			cout << "==================\n";
 
 			invoice(start,orderCount);
 
@@ -359,14 +360,13 @@ int main()
 			cout << setw(10) << "RECEIPT" << endl;
 			cout << "===============================\n";
 			cout << "Receipt No : " << receipt << endl;
-			cout << "Date : " << (1900 + localTime.tm_year) << "/"
-				<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
+			cout << "Date : " << localTime.tm_mday << "/"
+				<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 
 			cout << endl;
 			double total = invoice(start, orderCount);
-
-			cout << "\nPayment menthod : " << method << endl;
-
+			cout << "------------------------------------------------------------------------------------\n";
+			cout << "Payment menthod : " << method << endl;
 			cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 			cout << "------------------------------------------------------------------------------------\n";
 			cout << "Thank you. The QR code will be sent to your email after you complete the transaction.";
