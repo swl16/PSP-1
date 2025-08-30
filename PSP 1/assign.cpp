@@ -73,7 +73,7 @@ void registerUser() {
 
 	string username, password;
 	cout << "Enter a new username: ";
-	getline(cin,username);
+	getline(cin, username);
 	cout << "Enter a new password: ";
 	cin >> password;
 
