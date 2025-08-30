@@ -27,9 +27,19 @@ struct Order {
 	double money;
 	double total;
 };
+
+struct userinfor {
+	string user_name;
+	string email;
+	string ic_number;
+	int phone_number;
+};
+
 Order orders[100];   // store up to 100 orders
 int orderCount = 0;
 
+userinfor infor[100];
+int inforCount = 0;
 
 void Menu() {
 
@@ -41,7 +51,7 @@ void Menu() {
 	cout << "Please choose. (1-3): \n";
 }
 
-void user() {
+userinfor user() {
 	cout << "    __________   ========  |      __      |   =====       \n";
 	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
 	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
@@ -97,7 +107,13 @@ void user() {
 		}
 	} while (choice != 'Y' && choice != 'y');
 
+	userinfor users;
+	users.user_name = user_name;
+	users.ic_number = ic_number;
+	users.phone_number = phone_number;
+	users.email = email;
 
+	infor[inforCount++] = users;
 
 	cout << "\nThis is the information.\n\n";
 	cout << "Name : " << user_name << endl;
@@ -108,6 +124,8 @@ void user() {
 	cout << "\nPress ENTER to continue.";
 	cin.ignore();
 	cin.get();
+
+	return users;
 }
 
 Order ticket()
@@ -240,92 +258,31 @@ Order ticket()
 	return newOrder;
 }
 
-void invoice(const Order &o)
+double invoice(int start, int end)
 {
-	double total = 0.0, amount = 0.0, tax1 = 0.0, processfee=0.0, subtotal=0.0;
+	double total = 0.0, amount = 0.0, tax1 = 0.0, subtotal=0.0;
 	int payment;
 	string method;
 
-	amount = o.money * o.pax;
-	subtotal = amount;
-	processfee = subtotal + process;
-	tax1 = subtotal * tax;
-	total = subtotal + processfee + tax1;
+	for (int i = start;i < end;i++) {
+		amount = orders[i].money * orders[i].pax;
+		subtotal += amount;
+		tax1 = subtotal * tax;
+		total = subtotal + process + tax1;
 
-	cout << "INVOICE SUMMARY\n";
-	cout << "==================\n";
-	cout << o.trainno << setfill(' ') << setw(10) << "x " << o.pax << setfill(' ') << setw(10) <<"RM " << amount;
-	cout << "---------------------------------------------------------\n";
-	cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
-	cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
-	cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
-	cout << "---------------------------------------------------------\n";
-	cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
-
-	cout << "\nPlease select your payment menthod." << endl;
-	cout << "1. E-wallet" << endl;
-	cout << "2. Credit card" << endl;
-	cout << "3. Debit card" << endl;
-	cout << "\nPlease select : ";
-	cin >> payment;
-	if (payment == 1) {
-		method = "E-wallet\n";
+		cout << "==================\n";
+		cout << "INVOICE SUMMARY\n";
+		cout << "==================\n";
+		cout << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
+		cout << "---------------------------------------------------------\n";
+		cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
+		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
+		cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
+		cout << "---------------------------------------------------------\n";
+		cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
 	}
-	else if (payment == 2) {
-		method = "Credit card\n";
-	}
-	else if (payment == 3) {
-		method = "Debit card\n";
-	}
-
-	cout << endl;
-
-	auto now = chrono::system_clock::now();
-	time_t currentTime = chrono::system_clock::to_time_t(now);
-
-	// Use localtime_s (safe version for MSVC)
-	struct tm localTime;
-	localtime_s(&localTime, &currentTime);
-
-	cout << "    __________   ========  |      __      |   =====       \n";
-	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
-	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
-	cout << "  |           |     ||     |   |      |   |  |       |   \n";
-	cout << "   -----------      ||     |__|        |__|  |______/    \n";
-	cout << "    000   000                                          \n";
-	cout << "==============================================================\n";
-
-	cout << "Name : " << user_name << endl;
-	cout << "IC Number / Passport Number : " << ic_number << endl;
-	cout << "Phone Number : +60" << phone_number << endl;
-	cout << "Email : " << email << endl;
-
-	cout << "--------------------------------------------------------------\n";
-	cout << setw(10) << "RECEIPT" << endl;
-	cout << "--------------------------------------------------------------\n";
-	cout << "Receipt No : ";
-	cout << "Date : " << (1900 + localTime.tm_year) << "/"
-		<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
-
-	cout << endl;
-
-	cout << "1. Train No " << o.trainno << setw(10) << "x" << o.pax << setw(10) << "RM " << amount << endl;
-	cout << "---------------------------------------------------------\n";
-
-	cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
-	cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
-	cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
-
-	cout << "---------------------------------------------------------\n";
-	cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
-
-	cout << "\nPayment menthod : " << method << endl;
-
-	cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
-	cout << "------------------------------------------------------------------------------------\n";
-	cout << "Thank you. The QR code will be sent to your email after you complete the transaction.";
-	cout << "If you do not receive the email, please contact our customer service +60123456789 or email to abc123@gmail.com\n";
-
+	
+	return total;
 }
 
 
@@ -342,7 +299,9 @@ int main()
 
 		if (menu_choose == 1) {
 
-			Order first = ticket();
+			int start = orderCount;
+			
+			ticket();
 
 			do {
 				cout << "\nDo you need to add on?(Y/N) : ";
@@ -350,7 +309,7 @@ int main()
 				cout << endl;
 
 				if (choice == 'y' || choice == 'Y') {
-					Order extra = ticket();
+					ticket();
 				}
 				else if (choice == 'N' || choice == 'n') {
 					break;
@@ -360,7 +319,59 @@ int main()
 				}
 			} while (choice != 'n' && choice != 'N');
 
-			invoice(first);
+			invoice(start,orderCount);
+
+			int payment;
+			string method;
+
+			cout << "\nPlease select your payment menthod." << endl;
+			cout << "1. E-wallet" << endl;
+			cout << "2. Credit card" << endl;
+			cout << "3. Debit card" << endl;
+			cout << "\nPlease select : ";
+			cin >> payment;
+			if (payment == 1) {
+				method = "E-wallet\n";
+			}
+			else if (payment == 2) {
+				method = "Credit card\n";
+			}
+			else if (payment == 3) {
+				method = "Debit card\n";
+			}
+
+			cout << endl;
+
+			auto now = chrono::system_clock::now();
+			time_t currentTime = chrono::system_clock::to_time_t(now);
+
+			// Use localtime_s (safe version for MSVC)
+			struct tm localTime;
+			localtime_s(&localTime, &currentTime);
+
+			cout << "===============================\n";
+			cout << setw(10) << "RECEIPT" << endl;
+			cout << "===============================\n";
+			cout << "Receipt No : ";
+			cout << "Date : " << (1900 + localTime.tm_year) << "/"
+				<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
+
+			cout << endl;
+
+			double total = invoice(start, orderCount);
+
+			cout << "\nPayment menthod : " << method << endl;
+
+			cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
+			cout << "------------------------------------------------------------------------------------\n";
+			cout << "Thank you. The QR code will be sent to your email after you complete the transaction.";
+			cout << "If you do not receive the email, please contact our customer service +60123456789 or email to abc123@gmail.com\n";
+
+
+
+
+
+
 
 
 		}
