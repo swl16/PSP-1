@@ -74,7 +74,7 @@ void registerUser() {
 	string username, password;
 	cout << "Enter a new username: ";
 	getline(cin, username);
-	cout << "Enter a new password: ";
+	cout << "\nEnter a new password: ";
 	cin >> password;
 
 	usernames[userCount] = username;
