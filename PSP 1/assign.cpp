@@ -9,14 +9,9 @@ using namespace std;
 
 const double process = 0.50;
 const double tax = 0.06;
-const int trainnum = 3;
-
-int orderhistory[trainnum] = { 0 };
 
 char choice;
 
-int train_no[10];
-int numofpax[100];
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
 
