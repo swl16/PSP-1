@@ -267,11 +267,13 @@ double invoice(int start, int end)
 		amount = orders[i].money * orders[i].pax;
 		subtotal += amount;
 		totalticket += orders[i].pax;
-		tax1 = subtotal * tax;
-		total = subtotal + process + tax1;
 
 		cout << "Train No " << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
 	}
+
+	tax1 = subtotal * tax;
+	total = subtotal + process + tax1;
+
 		cout << "---------------------------------------------------------\n";
 		cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
 		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
