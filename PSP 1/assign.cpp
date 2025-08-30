@@ -10,7 +10,15 @@ using namespace std;
 const double process = 0.50;
 const double tax = 0.06;
 
+const int MAX_USERS = 100;
+string usernames[MAX_USERS];
+string passwords[MAX_USERS];
+int userCount = 0;
+
+string loggedInUser = "";
+
 char choice;
+int choice1;
 
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
@@ -39,92 +47,137 @@ int orderCount = 0;
 userinfor infor[100];
 int inforCount = 0;
 
-void Menu() {
-
-	cout << "\nWelcome to TWD Train Ticket Booking System!\n";
-	cout << "1. BUY TICKET \n";
-	cout << "2. Order History \n";
-	cout << "3. EXIT \n";
-	cout << endl;
-	cout << "Please choose. (1-3): \n";
+void displayMenu() {
+	if (loggedInUser.empty()) {
+		cout << "Status: Not Logged In\n";
+	}
+	else {
+		cout << "Status: Logged in as " << loggedInUser << "\n";
+	}
+	cout << "1. Register\n";
+	cout << "2. Login\n";
+	cout << "3. Logout\n";
+	cout << "4. Forgot Password\n";
+	cout << "5. Exit\n";
+	cout << "-----------------------------------\n";
 }
 
-userinfor user() {
-	cout << "    __________   ========  |      __      |   =====       \n";
-	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
-	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
-	cout << "  |           |     ||     |   |      |   |  |       |   \n";
-	cout << "   -----------      ||     |__|        |__|  |______/    \n";
-	cout << "    000   000                                          \n";
 
-	cout << "\nWelcome to TWD Train Ticket Booking System!\n\n";
+void registerUser() {
+	cout << "\n--- User Registration ---\n";
 
-	string user_name, email, ic_number;
-	int phone_number;
+	if (userCount >= MAX_USERS) {
+		cout << "Cannot register new user. System is full.\n";
+		return;
+	}
 
-	cout << "Please fill in your personal's information before you book your train ticket. \n\n";
-	cout << "---------------------------------------------------------------------------------\n";
-	cout << "PASSENGER INFORMATION  \n";
-	cout << "User Name (as per IC) : ";
-	getline(cin, user_name);
-	cout << "IC Number / Passport Number (without -) : ";
-	cin >> ic_number;
+	string username, password;
+	cout << "Enter a new username: ";
+	getline(cin,username);
+	cout << "Enter a new password: ";
+	cin >> password;
 
-	cout << "\nCONTACT INFORMATION\n";
-	cout << "Phone number (without -) : +60";
-	cin >> phone_number;
-	cout << "Email : ";
-	cin >> email;
+	usernames[userCount] = username;
+	passwords[userCount] = password;
+	userCount++;
 
-	char choice;
-	do {
-		cout << "\nPlease confirm that the information is correct.";
-
-		cout << "Y/N?";
-		cin >> choice;
-		if (choice == 'N' || choice == 'n') {
-			cout << "\nGoing back to menu.\n\n";
-			cout << "PASSENGER INFORMATION  \n";
-			cout << "User Name (as per IC) : ";
-			cin.ignore();
-			getline(cin, user_name);
-			cout << "IC Number / Passport Number (without -) : ";
-			cin >> ic_number;
-
-			cout << "\nCONTACT INFOMATION\n";
-			cout << "Phone number (without -) : +60";
-			cin >> phone_number;
-			cout << "Email : ";
-			cin >> email;
-		}
-		else if (choice == 'Y' || choice == 'y') {
-			break;
-		}
-		else {
-			cout << "Invalid Input!";
-		}
-	} while (choice != 'Y' && choice != 'y');
-
-	userinfor users;
-	users.user_name = user_name;
-	users.ic_number = ic_number;
-	users.phone_number = phone_number;
-	users.email = email;
-
-	infor[inforCount++] = users;
-
-	cout << "\nThis is the information.\n\n";
-	cout << "Name : " << user_name << endl;
-	cout << "IC Number / Passport Number : " << ic_number << endl;
-	cout << "Phone Number : +60" << phone_number << endl;
-	cout << "Email : " << email << endl;
+	cout << "Registration successful!\n";
 
 	cout << "\nPress ENTER to continue.";
 	cin.ignore();
 	cin.get();
-
-	return users;
 }
+
+void loginUser() {
+	cout << "\n--- User Login ---\n";
+
+	if (!loggedInUser.empty()) {
+		cout << "You are already logged in as " << loggedInUser << ". Please log out first.\n";
+		return;
+	}
+
+	string username, password;
+	cout << "Enter username: ";
+	cin >> username;
+	cout << "Enter password: ";
+	cin >> password;
+
+	bool found = false;
+	for (int i = 0; i < userCount; ++i) {
+		if (usernames[i] == username && passwords[i] == password) {
+			loggedInUser = username;
+			found = true;
+			break;
+		}
+	}
+
+	if (found) {
+		cout << "Login successful. Welcome, " << loggedInUser << "!\n";
+	}
+	else {
+		cout << "Invalid username or password. Please try again.\n";
+	}
+}
+
+void clearScreen() {
+	// Check if the system is Windows
+#ifdef _WIN32
+	system("cls");
+	// Otherwise, assume it's a POSIX-compliant system (like Linux or macOS)
+#else
+	system("clear");
+#endif
+}
+
+void logoutUser() {
+	cout << "\n--- User Logout ---\n";
+
+	if (loggedInUser.empty()) {
+		cout << "No user is currently logged in.\n";
+	}
+	else {
+		cout << "User " << loggedInUser << " has been logged out successfully.\n";
+		loggedInUser = "";
+	}
+}
+
+void resetPassword() {
+	cout << "\n--- Password Reset ---\n";
+
+	string username;
+	cout << "Enter your username to reset the password: ";
+	cin >> username;
+
+	int userIndex = -1;
+	for (int i = 0; i < userCount; ++i) {
+		if (usernames[i] == username) {
+			userIndex = i;
+			break;
+		}
+	}
+
+	if (userIndex != -1) {
+		string newPassword;
+		cout << "Enter your new password: ";
+		cin >> newPassword;
+		passwords[userIndex] = newPassword;
+		cout << "Password for user '" << username << "' has been reset successfully.\n";
+	}
+	else {
+		cout << "Username not found. Cannot reset password.\n";
+	}
+}
+
+void Menu() {
+
+	cout << "\nWelcome to TWD Train Ticket Booking System!\n";
+	cout << "1. BUY TICKET \n";
+	cout << "2. ORDER HISTORY \n";
+	cout << "3. EXIT OR BACK TO LOGIN SCREEN \n";
+	cout << endl;
+	cout << "Please choose. (1-3): \n";
+}
+
 
 Order ticket()
 {
@@ -291,109 +344,149 @@ int main()
 {
 	int menu_choose;
 
-	user();
+	cout << "    __________   ========  |      __      |   =====       \n";
+	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
+	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
+	cout << "  |           |     ||     |   |      |   |  |       |   \n";
+	cout << "   -----------      ||     |__|        |__|  |______/    \n";
+	cout << "    000   000                                          \n";
+
+	cout << "\nWelcome to TWD Train Ticket Booking System!\n\n";
+
 
 	do {
-		Menu();
-		cin >> menu_choose;
+		displayMenu();
+		cout << "Enter your choice: ";
+		cin >> choice1;
 
-		if (menu_choose == 1) {
-
-			int start = orderCount;
-			
-			ticket();
-
+		switch (choice1) {
+		case 1:
+		case 2:
+			if (choice1 == 1) {
+				registerUser();
+			}
+			else if (choice1 == 2) {
+				loginUser();
+			}
 			do {
-				cout << "\nDo you need to add on?(Y/N) : ";
-				cin >> choice;
-				cout << endl;
+				clearScreen();
+				Menu();
+				cin >> menu_choose;
 
-				if (choice == 'y' || choice == 'Y') {
+				if (menu_choose == 1) {
+
+					int start = orderCount;
+
 					ticket();
+
+					do {
+						cout << "\nDo you need to add on?(Y/N) : ";
+						cin >> choice;
+						cout << endl;
+
+						if (choice == 'y' || choice == 'Y') {
+							ticket();
+						}
+						else if (choice == 'N' || choice == 'n') {
+							break;
+						}
+						else {
+							cout << "Invalid" << endl;
+						}
+					} while (choice != 'n' && choice != 'N');
+
+					cout << "==================\n";
+					cout << "INVOICE SUMMARY\n";
+					cout << "==================\n";
+
+					invoice(start, orderCount);
+
+					int payment;
+					string method;
+
+					cout << "\nPlease select your payment menthod." << endl;
+					cout << "1. E-wallet" << endl;
+					cout << "2. Credit card" << endl;
+					cout << "3. Debit card" << endl;
+					cout << "\nPlease select : ";
+					cin >> payment;
+					if (payment == 1) {
+						method = "E-wallet\n";
+					}
+					else if (payment == 2) {
+						method = "Credit card\n";
+					}
+					else if (payment == 3) {
+						method = "Debit card\n";
+					}
+
+					cout << endl;
+
+					auto now = chrono::system_clock::now();
+					time_t currentTime = chrono::system_clock::to_time_t(now);
+
+					// Use localtime_s (safe version for MSVC)
+					struct tm localTime;
+					localtime_s(&localTime, &currentTime);
+
+					int receipt;
+					srand(time(0));
+					receipt = rand() % 9999 + 1000;
+
+					cout << "===============================\n";
+					cout << setw(10) << "RECEIPT" << endl;
+					cout << "===============================\n";
+					cout << "Receipt No : " << receipt << endl;
+					cout << "Date : " << localTime.tm_mday << "/"
+						<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
+
+					cout << endl;
+					double total = invoice(start, orderCount);
+					cout << "------------------------------------------------------------------------------------\n";
+					cout << "Payment menthod : " << method << endl;
+					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
+					cout << "------------------------------------------------------------------------------------\n";
+					cout << "THANK YOU.\n";
+
+
 				}
-				else if (choice == 'N' || choice == 'n') {
-					break;
+				else if (menu_choose == 2) {
+
+				}
+				else if (menu_choose == 3) {
+					cout << "1. EXIT\n";
+					cout << "2. GO BACK TO LOGIN SCREEN\n";
+					cout << "Enter your choice : ";
+					cin >> choice1;
+					if (choice1 == 1) {
+						cout << "THANK YOU! Have a nice day.";
+						return 1;
+					}
+					else if (choice1 == 2) {
+						displayMenu();
+					}
 				}
 				else {
-					cout << "Invalid" << endl;
+					cout << "Invalid Input! \n";
+					cout << "Going back to main menu.\n";
 				}
-			} while (choice != 'n' && choice != 'N');
 
-			cout << "==================\n";
-			cout << "INVOICE SUMMARY\n";
-			cout << "==================\n";
-
-			invoice(start,orderCount);
-
-			int payment;
-			string method;
-
-			cout << "\nPlease select your payment menthod." << endl;
-			cout << "1. E-wallet" << endl;
-			cout << "2. Credit card" << endl;
-			cout << "3. Debit card" << endl;
-			cout << "\nPlease select : ";
-			cin >> payment;
-			if (payment == 1) {
-				method = "E-wallet\n";
-			}
-			else if (payment == 2) {
-				method = "Credit card\n";
-			}
-			else if (payment == 3) {
-				method = "Debit card\n";
-			}
-
-			cout << endl;
-
-			auto now = chrono::system_clock::now();
-			time_t currentTime = chrono::system_clock::to_time_t(now);
-
-			// Use localtime_s (safe version for MSVC)
-			struct tm localTime;
-			localtime_s(&localTime, &currentTime);
-
-			int receipt;
-			srand(time(0));
-			receipt = rand()%9999 + 1000;
-
-			cout << "===============================\n";
-			cout << setw(10) << "RECEIPT" << endl;
-			cout << "===============================\n";
-			cout << "Receipt No : " << receipt << endl;
-			cout << "Date : " << localTime.tm_mday << "/"
-				<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
-
-			cout << endl;
-			double total = invoice(start, orderCount);
-			cout << "------------------------------------------------------------------------------------\n";
-			cout << "Payment menthod : " << method << endl;
-			cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
-			cout << "------------------------------------------------------------------------------------\n";
-			cout << "Thank you. The QR code will be sent to your email after you complete the transaction.\n";
-			cout << "If you do not receive the email, please contact our customer service +60123456789 or email to abc123@gmail.com\n";
-
-
-
-
-
-
-
-
+			} while (menu_choose != 3);
+			break;
+		case 3:
+			logoutUser();
+			break;
+		case 4:
+			resetPassword();
+			break;
+		case 5:
+			cout << "\nThank you for using the Train Ticket System. Goodbye!\n";
+			break;
+		default:
+			cout << "\nInvalid choice. Please try again.\n";
 		}
-		else if (menu_choose == 2) {
+    } while (choice1 != 5);
 
-		}
-		else if (menu_choose == 3) {
-			cout << "THANK YOU! Have a nice day.";
-			return 1;
-		}
-		else {
-			cout << "Invalid Input! \n";
-			cout << "Going back to main menu.\n";
-		}
 
-	} while (menu_choose != 3);
-	
 	return 0;
 }
