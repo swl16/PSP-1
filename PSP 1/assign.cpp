@@ -231,7 +231,7 @@ Order ticket()
 
 	Order newOrder;
 	newOrder.trainno = trainno;
-	newOrder.deptime = deptime;
+	newOrder.deptime = deptime,deptime1,deptime2;
 	newOrder.date = date1;
 	newOrder.pax = pax;
 	newOrder.money = money;
