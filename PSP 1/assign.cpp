@@ -262,24 +262,25 @@ Order ticket()
 double invoice(int start, int end)
 {
 	double total = 0.0, amount = 0.0, tax1 = 0.0, subtotal=0.0;
-	int payment;
-	string method;
+	int totalticket;
 
 	for (int i = start;i < end;i++) {
 		amount = orders[i].money * orders[i].pax;
 		subtotal += amount;
+		totalticket += orders[i].pax;
 		tax1 = subtotal * tax;
 		total = subtotal + process + tax1;
 
 		cout << "==================\n";
 		cout << "INVOICE SUMMARY\n";
 		cout << "==================\n";
-		cout << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
+		cout << "Train No " << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
 		cout << "---------------------------------------------------------\n";
 		cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
 		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
 		cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
 		cout << "---------------------------------------------------------\n";
+		cout << left << setw(30) << "Total Ticket : " <<  totalticket << endl;
 		cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
 	}
 	
@@ -362,7 +363,6 @@ int main()
 				<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 
 			cout << endl;
-
 			double total = invoice(start, orderCount);
 
 			cout << "\nPayment menthod : " << method << endl;
