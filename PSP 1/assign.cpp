@@ -4,6 +4,7 @@
 #include<limits>
 #include<chrono>
 #include<ctime>
+#include<cstdlib>
 using namespace std;
 
 const double process = 0.50;
@@ -349,10 +350,14 @@ int main()
 			struct tm localTime;
 			localtime_s(&localTime, &currentTime);
 
+			int receipt;
+			srand(time(0));
+			receipt = rand()%9999 + 1000;
+
 			cout << "===============================\n";
 			cout << setw(10) << "RECEIPT" << endl;
 			cout << "===============================\n";
-			cout << "Receipt No : ";
+			cout << "Receipt No : " << receipt << endl;
 			cout << "Date : " << (1900 + localTime.tm_year) << "/"
 				<< (1 + localTime.tm_mon) << "/" << localTime.tm_mday << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 
