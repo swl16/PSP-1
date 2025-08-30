@@ -23,6 +23,8 @@ double fare[] = { 50.00,56.00,96.00 };
 struct Order {
 	int trainno;
 	int deptime;
+	int deptime1;
+	int deptime2;
 	string date;
 	int pax;
 	double money;
@@ -231,7 +233,9 @@ Order ticket()
 
 	Order newOrder;
 	newOrder.trainno = trainno;
-	newOrder.deptime = deptime,deptime1,deptime2;
+	newOrder.deptime = deptime;
+	newOrder.deptime1= deptime1;
+	newOrder.deptime2 = deptime2;
 	newOrder.date = date1;
 	newOrder.pax = pax;
 	newOrder.money = money;
