@@ -325,7 +325,7 @@ double invoice(int start, int end)
 	return total;
 }
 
-void orderhistory(double total)
+void orderhistory()
 {
 	if (orderCount == 0) {
 		cout << "\nNo previous orders found.\n";
@@ -335,9 +335,15 @@ void orderhistory(double total)
 	cout << "  ORDER HISTORY\n";
 	cout << "=================\n";
 	for (int i = 0;i < orderCount;i++) {
+		double subtotal = orders[i].money * orders[i].pax;
+		double tax1 = subtotal * tax;
+		double total = subtotal + process + tax1;
+
 		cout << "Order #" << (i + 1) << endl;
 		cout << "Train No : " << orders[i].trainno << endl;
+		cout << "Departure date : " << orders[i].date << endl;
 		cout << "Number of pax : " << orders[i].pax << endl;
+		cout << "Price per ticket : RM " <<fixed <<setprecision(2)<< orders[i].money << endl;
 		cout << "Total payable amount : " << total << endl;
 		cout << "---------------------------------\n";
 	}
@@ -443,9 +449,8 @@ int main()
 					cout << "Receipt No : " << receipt << endl;
 					cout << "Date : " << localTime.tm_mday << "/"
 						<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
-
-					cout << endl;
 					double total = invoice(start, orderCount);
+					cout << endl;
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "Payment menthod : " << method << endl;
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
@@ -456,6 +461,9 @@ int main()
 				}
 				else if (menu_choose == 2) {
 					orderhistory();
+					cout << "Press ENTER to continue...";
+					cin.ignore();
+					cin.get();
 
 				}
 				else if (menu_choose == 3) {
@@ -468,7 +476,7 @@ int main()
 						return 1;
 					}
 					else if (choice1 == 2) {
-						displayMenu();
+						break;
 					}
 				}
 				else {
