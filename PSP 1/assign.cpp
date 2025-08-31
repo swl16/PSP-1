@@ -433,9 +433,8 @@ int main()
 				Menu();
 				cin >> menu_choose;
 
-				switch(menu_choose)
+				if (menu_choose == 1)
 				{
-				case 1:
 					int start = orderCount;
 
 					ticket();
@@ -509,14 +508,14 @@ int main()
 					cout << "THANK YOU.\n";
 
 					break;
-		        case 2:
+				}
+				else if (menu_choose == 2) {
 					orderhistory();
 					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
-					break;
-				
-				case 3: 
+				}
+				else if (menu_choose == 3) {
 					cout << "1. EXIT\n";
 					cout << "2. GO BACK TO LOGIN SCREEN\n";
 					cout << "Enter your choice : ";
@@ -528,10 +527,9 @@ int main()
 					else if (choice1 == 2) {
 						break;
 					}
-					break;
-				default:
+				}
+				else{
 					cout << "Invalid Input! Going back to main menu.\n";
-					break;
 				}
 
 			} while (menu_choose != 3);
