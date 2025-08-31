@@ -427,13 +427,15 @@ int main()
 		case 2:
 			loginUser();
 			if (loggedInUser.empty()) break;
+
 			do {
 				clearScreen();
 				Menu();
 				cin >> menu_choose;
 
-				if (menu_choose == 1) {
-
+				switch(menu_choose)
+				{
+				case 1:
 					int start = orderCount;
 
 					ticket();
@@ -479,6 +481,8 @@ int main()
 						method = "Debit card\n";
 					}
 
+					cout << endl;
+
 					auto now = chrono::system_clock::now();
 					time_t currentTime = chrono::system_clock::to_time_t(now);
 
@@ -503,18 +507,16 @@ int main()
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
-					break;
-					Menu();
 
-				}
-				else if (menu_choose == 2) {
+				   
+		        case 2:
 					orderhistory();
 					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
 
-				}
-				else if (menu_choose == 3) {
+				
+				case 3: 
 					cout << "1. EXIT\n";
 					cout << "2. GO BACK TO LOGIN SCREEN\n";
 					cout << "Enter your choice : ";
@@ -526,8 +528,8 @@ int main()
 					else if (choice1 == 2) {
 						break;
 					}
-				}
-				else {
+				
+				default:
 					cout << "Invalid Input! Going back to main menu.\n";
 				}
 
