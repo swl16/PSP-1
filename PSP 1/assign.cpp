@@ -24,6 +24,7 @@ double fare[] = { 50.00,56.00,96.00 };
 
 struct Order {
 	int trainno;
+	int time;
 	int deptime;
 	int deptime1;
 	int deptime2;
@@ -31,6 +32,8 @@ struct Order {
 	int pax;
 	double money;
 	double total;
+	string origin;
+	string destination;
 };
 
 Order orders[100];   // store up to 100 orders
@@ -174,7 +177,7 @@ Order ticket()
 	char dash1, dash2, tf;
 	int trainno, deptime, deptime1, deptime2, pax, time1 = 0, day, month, year;
 	double money = 0.0;
-	string date1;
+	string date1,origin,destination;
 	string ticketDetails[3];
 
 	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
@@ -199,6 +202,8 @@ Order ticket()
 
 	switch (trainno) {
 	case 1:
+		origin = "Kuala Lumpur";
+		destination = "Butterworth";
 		cout << left << setw(5) << "==================================" << endl;
 		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
 		cout << left << setw(5) << "----------------------------------" << endl;
@@ -222,6 +227,8 @@ Order ticket()
 		}
 		break;
 	case 2:
+		origin = "Kajang";
+		destination = "JB Sentral";
 		cout << left << setw(5) << "==================================" << endl;
 		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
 		cout << left << setw(5) << "----------------------------------" << endl;
@@ -245,6 +252,8 @@ Order ticket()
 		}
 		break;
 	case 3:
+		origin = "KL Sentral";
+		destination = "Ipoh";
 		cout << left << setw(5) << "==================================" << endl;
 		cout << left << setw(5) << "| NO | DEPARTURE TIME | MIN.FARE |" << endl;
 		cout << left << setw(5) << "----------------------------------" << endl;
@@ -303,6 +312,9 @@ Order ticket()
 	newOrder.date = date1;
 	newOrder.pax = pax;
 	newOrder.money = money;
+	newOrder.time = time1;
+	newOrder.origin = origin;
+	newOrder.destination = destination;
 
 	orders[orderCount++] = newOrder;
 
@@ -311,10 +323,10 @@ Order ticket()
 	cout << "Train No : " << trainno << endl;
 	cout << "Departure Time : " << time1 << ":00";
 	if (time1 >= 12) {
-		cout << "PM\n";
+		cout << " PM\n";
 	}
 	else {
-		cout << "AM\n";
+		cout << " AM\n";
 	}
 	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
@@ -365,8 +377,15 @@ void orderhistory()
 		double total = subtotal + process + tax1;
 
 		cout << "Order #" << (i + 1) << endl;
-		cout << "Train No : " << orders[i].trainno << endl;
-		cout << "Departure date : " << orders[i].date << endl;
+		cout << "Train No : " << orders[i].trainno << "  " << orders[i].origin << " --> " << orders[i].destination << endl;
+		cout << "Departure Date : " << orders[i].date << endl;
+		cout << "Departure Time : " << orders[i].time << ":00";
+		if (orders[i].time >= 12) {
+			cout << " PM\n";
+		}
+		else {
+			cout << " AM\n";
+		}
 		cout << "Number of pax : " << orders[i].pax << endl;
 		cout << "Price per ticket : RM " <<fixed <<setprecision(2)<< orders[i].money << endl;
 		cout << "Total payable amount : RM" << total << endl;
