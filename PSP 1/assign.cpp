@@ -18,7 +18,6 @@ int userCount = 0;
 string loggedInUser = "";
 
 char choice;
-int choice1;
 
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
@@ -329,7 +328,7 @@ double invoice(int start, int end)
 		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
 		cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
 		cout << "---------------------------------------------------------\n";
-		cout << left << setw(30) << "Total Ticket : " <<  totalticket << endl;
+		cout << left << setw(30) << "Total Tickets : " <<  totalticket << endl;
 		cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
 	
 	return total;
@@ -340,6 +339,7 @@ double invoice(int start, int end)
 int main()
 {
 	int menu_choose;
+	int choice1;
 
 	cout << "    __________   ========  |      __      |   =====       \n";
 	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
@@ -416,8 +416,6 @@ int main()
 					else if (payment == 3) {
 						method = "Debit card\n";
 					}
-
-					cout << endl;
 
 					auto now = chrono::system_clock::now();
 					time_t currentTime = chrono::system_clock::to_time_t(now);
