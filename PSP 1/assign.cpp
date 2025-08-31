@@ -498,8 +498,8 @@ int main()
 					cout << "Receipt No : " << receipt << endl;
 					cout << "Date : " << localTime.tm_mday << "/"
 						<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
-					double total = invoice(start, orderCount);
 					cout << endl;
+					double total = invoice(start, orderCount);
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "Payment menthod : " << method << endl;
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
