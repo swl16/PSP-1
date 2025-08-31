@@ -64,7 +64,7 @@ void registerUser() {
 	string username, password;
 	cout << "Enter a new username(without space): ";
 	cin >> username;
-	cout << "Enter a new password: ";
+	 cout << "Enter a new password: ";
 	cin >> password;
 
 	usernames[userCount] = username;
@@ -171,10 +171,13 @@ void Menu() {
 
 Order ticket()
 {
-	int trainno, deptime, deptime1, deptime2, pax, time1 = 0;
+	char dash1, dash2, tf;
+	int trainno, deptime, deptime1, deptime2, pax, time1 = 0, day, month, year;
 	double money = 0.0;
 	string date1;
 	string ticketDetails[3];
+
+	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 
 	cout << "AVAILABLE TRAIN:\n\n";
 	cout << left << setw(10) << "=========================================" << endl;
@@ -191,6 +194,7 @@ Order ticket()
 		cout << "Invalid train number.\n";
 		return Order{};
 	}
+
 	cout << endl;
 
 	switch (trainno) {
@@ -268,8 +272,29 @@ Order ticket()
 		break;
 	}
 	cout << endl;
-	cout << "Departure date : ";
-	cin >> date1;
+
+	do
+	{
+		tf = 0;
+		cout << "Departure date (dd/mm/yyyy) : ";
+		cin >> day >> dash1 >> month >> dash2 >> year;
+		if (month < 1 || month >12) {
+			cout << "Invalid Input\n";
+			tf = 1;
+		}
+		else if (day <1 || day > days_inMonth[month]) {
+			cout << "Invalid Input\n";
+			tf = 1;
+		}
+		else if (year < 2025) {
+			cout << "Invalid Input\n";
+			tf = 1;
+		}
+
+	} while (tf != 0);
+
+	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+
 	cout << "Number of pax : ";
 	cin >> pax;
 
@@ -308,7 +333,7 @@ double invoice(int start, int end)
 		subtotal += amount;
 		totalticket += orders[i].pax;
 
-		cout << "Train No " << orders[i].trainno << "   x " << orders[i].pax << fixed << setprecision(2) << "   RM " << amount << endl;
+		cout << "Train No " << orders[i].trainno << setw(15) << right << "   x " << orders[i].pax << fixed << setprecision(2) << setw(7) << "   RM " << amount << endl;
 	}
 
 	tax1 = subtotal * tax;
@@ -461,7 +486,7 @@ int main()
 				}
 				else if (menu_choose == 2) {
 					orderhistory();
-					cout << "Press ENTER to continue...";
+					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
 
