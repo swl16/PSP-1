@@ -506,8 +506,6 @@ int main()
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
-
-					break;
 				}
 				else if (menu_choose == 2) {
 					orderhistory();
