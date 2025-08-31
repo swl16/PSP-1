@@ -281,9 +281,6 @@ Order ticket()
 
 	Order newOrder;
 	newOrder.trainno = trainno;
-	newOrder.deptime = deptime;
-	newOrder.deptime1= deptime1;
-	newOrder.deptime2 = deptime2;
 	newOrder.date = date1;
 	newOrder.pax = pax;
 	newOrder.money = money;
@@ -459,7 +456,7 @@ int main()
 					cout << "Enter your choice : ";
 					cin >> choice1;
 					if (choice1 == 1) {
-						cout << "THANK YOU! Have a nice day.";
+						cout << "\nTHANK YOU! Have a nice day.\n";
 						return 1;
 					}
 					else if (choice1 == 2) {
