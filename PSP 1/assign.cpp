@@ -422,11 +422,13 @@ int main()
 
 		switch (choice1) {
 		case 1:
-				registerUser();
-				break;
 		case 2:
-			loginUser();
-			if (loggedInUser.empty()) break;
+			if (choice1 == 1) {
+				registerUser();
+			}
+			else if (choice1 == 2) {
+				loginUser();
+			}
 
 			do {
 				clearScreen();
@@ -480,9 +482,9 @@ int main()
 							method = "Debit card\n";
 						}
 						else {
-							method = "Unknown\n";
+							method = "Invalid input! Please try again.\n";
 						}
-					} while (payment != 3);
+					} while (payment <= 0 || payment > 3);
 					cout << endl;
 
 					auto now = chrono::system_clock::now();
@@ -510,6 +512,10 @@ int main()
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
 
+					cout << "\nPress ENTER to continue.";
+					cin.ignore();
+					cin.get();
+
 					menu_choose = 0;
 				}
 				else if (menu_choose == 2) {
@@ -517,6 +523,8 @@ int main()
 					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
+
+					menu_choose == 0;
 				}
 				else if (menu_choose == 3) {
 					cout << "1. EXIT\n";
@@ -531,7 +539,7 @@ int main()
 						break;
 					}
 				}
-				else{
+				else {
 					cout << "Invalid Input! Going back to main menu.\n";
 				}
 
@@ -549,7 +557,7 @@ int main()
 		default:
 			cout << "\nInvalid choice. Please try again.\n";
 		}
-    } while (choice1 != 5);
+	} while (choice1 != 5);
 
 
 	return 0;
