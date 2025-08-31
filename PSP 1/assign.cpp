@@ -463,22 +463,26 @@ int main()
 
 					int payment;
 					string method;
-
-					cout << "\nPlease select your payment menthod." << endl;
-					cout << "1. E-wallet" << endl;
-					cout << "2. Credit card" << endl;
-					cout << "3. Debit card" << endl;
-					cout << "\nPlease select : ";
-					cin >> payment;
-					if (payment == 1) {
-						method = "E-wallet\n";
-					}
-					else if (payment == 2) {
-						method = "Credit card\n";
-					}
-					else if (payment == 3) {
-						method = "Debit card\n";
-					}
+					do {
+						cout << "\nPlease select your payment menthod." << endl;
+						cout << "1. E-wallet" << endl;
+						cout << "2. Credit card" << endl;
+						cout << "3. Debit card" << endl;
+						cout << "\nPlease select : ";
+						cin >> payment;
+						if (payment == 1) {
+							method = "E-wallet\n";
+						}
+						else if (payment == 2) {
+							method = "Credit card\n";
+						}
+						else if (payment == 3) {
+							method = "Debit card\n";
+						}
+						else {
+							method = "Unknown\n";
+						}
+					} while (payment != 3);
 
 					cout << endl;
 
