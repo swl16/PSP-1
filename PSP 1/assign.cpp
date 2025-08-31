@@ -33,18 +33,9 @@ struct Order {
 	double total;
 };
 
-struct userinfor {
-	string user_name;
-	string email;
-	string ic_number;
-	int phone_number;
-};
-
 Order orders[100];   // store up to 100 orders
 int orderCount = 0;
 
-userinfor infor[100];
-int inforCount = 0;
 
 void displayMenu() {
 	if (loggedInUser.empty()) {
@@ -196,6 +187,10 @@ Order ticket()
 
 	cout << "\nPlease choose your train number : ";
 	cin >> trainno;
+	if (trainno < 1 || trainno > 3) {
+		cout << "Invalid train number.\n";
+		return Order{};
+	}
 	cout << endl;
 
 	switch (trainno) {
@@ -300,10 +295,6 @@ Order ticket()
 	cout << "Number of pax : " << pax << endl;
 	cout << "Price : RM " << money << " per person" << endl;
 
-	ticketDetails[0] = to_string(trainno);
-	ticketDetails[1] = to_string(pax);
-	ticketDetails[2] = to_string(money);
-
 	return newOrder;
 }
 
@@ -329,9 +320,27 @@ double invoice(int start, int end)
 		cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
 		cout << "---------------------------------------------------------\n";
 		cout << left << setw(30) << "Total Tickets : " <<  totalticket << endl;
-		cout << left << setw(30) << "Total : " << "RM " << fixed << setprecision(2) << total << endl;
+		cout << left << setw(30) << "Total payable amount : " << "RM " << fixed << setprecision(2) << total << endl;
 	
 	return total;
+}
+
+void orderhistory(double total)
+{
+	if (orderCount == 0) {
+		cout << "\nNo previous orders found.\n";
+		return;
+	}
+	cout << "=================\n";
+	cout << "  ORDER HISTORY\n";
+	cout << "=================\n";
+	for (int i = 0;i < orderCount;i++) {
+		cout << "Order #" << (i + 1) << endl;
+		cout << "Train No : " << orders[i].trainno << endl;
+		cout << "Number of pax : " << orders[i].pax << endl;
+		cout << "Total payable amount : " << total << endl;
+		cout << "---------------------------------\n";
+	}
 }
 
 
@@ -446,6 +455,7 @@ int main()
 
 				}
 				else if (menu_choose == 2) {
+					orderhistory();
 
 				}
 				else if (menu_choose == 3) {
