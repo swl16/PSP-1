@@ -402,7 +402,7 @@ void orderhistory()
 
 int main()
 {
-	int menu_choose;
+	int menu_choose = 0;
 	int choice1;
 
 	cout << "    __________   ========  |      __      |   =====       \n";
@@ -483,7 +483,6 @@ int main()
 							method = "Unknown\n";
 						}
 					} while (payment != 3);
-
 					cout << endl;
 
 					auto now = chrono::system_clock::now();
@@ -510,6 +509,8 @@ int main()
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
+
+					menu_choose = 0;
 				}
 				else if (menu_choose == 2) {
 					orderhistory();
@@ -534,7 +535,7 @@ int main()
 					cout << "Invalid Input! Going back to main menu.\n";
 				}
 
-			} while (menu_choose != 3);
+			} while (menu_choose == 0);
 			break;
 		case 3:
 			logoutUser();
