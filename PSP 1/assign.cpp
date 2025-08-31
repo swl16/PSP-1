@@ -508,13 +508,13 @@ int main()
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
 
-				   
+					break;
 		        case 2:
 					orderhistory();
 					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
-
+					break;
 				
 				case 3: 
 					cout << "1. EXIT\n";
@@ -528,9 +528,10 @@ int main()
 					else if (choice1 == 2) {
 						break;
 					}
-				
+					break;
 				default:
 					cout << "Invalid Input! Going back to main menu.\n";
+					break;
 				}
 
 			} while (menu_choose != 3);
