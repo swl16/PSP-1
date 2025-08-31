@@ -284,22 +284,26 @@ Order ticket()
 
 	do
 	{
-		tf = 0;
-		cout << "Departure date (dd/mm/yyyy) : ";
-		cin >> day >> dash1 >> month >> dash2 >> year;
-		if (month < 1 || month >12) {
-			cout << "Invalid Input\n";
-			tf = 1;
+		try {
+			tf = 0;
+			cout << "Departure date (dd/mm/yyyy) : ";
+			cin >> day >> dash1 >> month >> dash2 >> year;
+			if (month < 1 || month >12) {
+				cout << "Invalid Input\n";
+				tf = 1;
+			}
+			else if (day <1 || day > days_inMonth[month]) {
+				cout << "Invalid Input\n";
+				tf = 1;
+			}
+			else if (year < 2025) {
+				cout << "Invalid Input\n";
+				tf = 1;
+			}
 		}
-		else if (day <1 || day > days_inMonth[month]) {
+		catch(...){
 			cout << "Invalid Input\n";
-			tf = 1;
 		}
-		else if (year < 2025) {
-			cout << "Invalid Input\n";
-			tf = 1;
-		}
-
 	} while (tf != 0);
 
 	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
@@ -361,6 +365,7 @@ double invoice(int start, int end)
 	
 	return total;
 }
+
 
 void orderhistory()
 {
@@ -500,6 +505,7 @@ int main()
 					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 					cout << "------------------------------------------------------------------------------------\n";
 					cout << "THANK YOU.\n";
+					break;
 
 
 				}
