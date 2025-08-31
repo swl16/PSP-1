@@ -422,13 +422,11 @@ int main()
 
 		switch (choice1) {
 		case 1:
-		case 2:
-			if (choice1 == 1) {
 				registerUser();
-			}
-			else if (choice1 == 2) {
-				loginUser();
-			}
+				break;
+		case 2:
+			loginUser();
+			if (loggedInUser.empty()) break;
 			do {
 				clearScreen();
 				Menu();
@@ -523,15 +521,14 @@ int main()
 					cin >> choice1;
 					if (choice1 == 1) {
 						cout << "\nTHANK YOU! Have a nice day.\n";
-						return 1;
+						return 0;
 					}
 					else if (choice1 == 2) {
 						break;
 					}
 				}
 				else {
-					cout << "Invalid Input! \n";
-					cout << "Going back to main menu.\n";
+					cout << "Invalid Input! Going back to main menu.\n";
 				}
 
 			} while (menu_choose != 3);
@@ -543,7 +540,7 @@ int main()
 			resetPassword();
 			break;
 		case 5:
-			cout << "\nThank you for using the Train Ticket System. Goodbye!\n";
+			cout << "\nThank you for using TWD Train Ticket System. Goodbye!\n";
 			break;
 		default:
 			cout << "\nInvalid choice. Please try again.\n";
