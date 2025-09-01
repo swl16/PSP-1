@@ -1,18 +1,18 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include<limits>
-#include<chrono>
-#include<ctime>
-#include<cstdlib>
+#include <limits>
+#include <chrono>
+#include <ctime>
+#include <cstdlib>
+#include <fstream>
+
+#include "Structs.hpp"
 using namespace std;
 
 const double process = 0.50;
 const double tax = 0.06;
 
-const int MAX_USERS = 100;
-string usernames[MAX_USERS];
-string passwords[MAX_USERS];
 int userCount = 0;
 
 string loggedInUser = "";
@@ -22,23 +22,68 @@ char choice;
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
 
-struct Order {
-	int trainno;
-	int time;
-	int deptime;
-	int deptime1;
-	int deptime2;
-	string date;
-	int pax;
-	double money;
-	double total;
-	string origin;
-	string destination;
-};
 
-Order orders[100];   // store up to 100 orders
+
+
 int orderCount = 0;
 
+void saveusers(user* users) {
+	const string filename = "users.txt";
+	ofstream out(filename);
+	if (!out) {
+		cout << "Error opening file for saving users!" << endl;
+	}
+	for (int i = 0;i < userCount;i++)
+	{
+		out << users[i].usernames << " " << users[i].passwords << endl;
+	}
+	out.close();
+}
+
+void usersfromfile(user*users){
+	const string filename = "users.txt";
+	ifstream in(filename);
+	if (!in) {
+		return;
+	}
+	userCount = 0;
+	while (in >> users[userCount].usernames >> users[userCount].passwords) {
+		userCount++;
+	}
+	in.close();
+}
+
+void saveorders(Order*orders)
+{
+	const string filename = "orders.txt";
+	ofstream out(filename);
+	if (!out) {
+		cout << "Error opening file for saving orders!" << endl;
+		return;
+	}
+	for (int i = 0;i < orderCount;i++)
+	{
+		out << orders[i].trainno << " " << orders[i].origin << " " << orders[i].destination << " "
+			<< orders[i].date << " " << orders[i].time << " " << orders[i].pax << " " << orders[i].money << endl;
+	}
+	out.close();
+}
+
+void ordersfromfile(Order*orders)
+{
+	const string filename = "orders.txt";
+	ifstream in(filename);
+	if (!in) {
+		return;
+	}
+	orderCount = 0;
+
+	while (in >> orders[orderCount].trainno >> orders[orderCount].origin >> orders[orderCount].destination
+		>> orders[orderCount].date >> orders[orderCount].time >> orders[orderCount].pax >> orders[orderCount].money) {
+		orderCount++;
+	}
+	in.close();
+}
 
 void displayMenu() {
 	if (loggedInUser.empty()) {
@@ -56,13 +101,9 @@ void displayMenu() {
 }
 
 
-void registerUser() {
+void registerUser(user*users) {
 	cout << "\n--- User Registration ---\n";
-
-	if (userCount >= MAX_USERS) {
-		cout << "Cannot register new user. System is full.\n";
-		return;
-	}
+	user registeringUser = user();
 
 	string username, password;
 	cout << "Enter a new username(without space): ";
@@ -70,8 +111,9 @@ void registerUser() {
 	 cout << "Enter a new password: ";
 	cin >> password;
 
-	usernames[userCount] = username;
-	passwords[userCount] = password;
+	registeringUser.usernames = username;
+	registeringUser.passwords = password;
+	users[userCount] = registeringUser;
 	userCount++;
 
 	cout << "Registration successful!\n";
@@ -81,12 +123,12 @@ void registerUser() {
 	cin.get();
 }
 
-void loginUser() {
+int loginUser(user*users) {
 	cout << "\n--- User Login ---\n";
 
 	if (!loggedInUser.empty()) {
 		cout << "You are already logged in as " << loggedInUser << ". Please log out first.\n";
-		return;
+		return 1;
 	}
 
 	string username, password;
@@ -97,7 +139,7 @@ void loginUser() {
 
 	bool found = false;
 	for (int i = 0; i < userCount; ++i) {
-		if (usernames[i] == username && passwords[i] == password) {
+		if (users[i].usernames == username && users[i].passwords == password) {
 			loggedInUser = username;
 			found = true;
 			break;
@@ -106,10 +148,13 @@ void loginUser() {
 
 	if (found) {
 		cout << "Login successful. Welcome, " << loggedInUser << "!\n";
+		return 1;
 	}
 	else {
 		cout << "Invalid username or password. Please try again.\n";
+		return 0;
 	}
+	return 0;
 }
 
 void clearScreen() {
@@ -134,7 +179,7 @@ void logoutUser() {
 	}
 }
 
-void resetPassword() {
+void resetPassword(user*users) {
 	cout << "\n--- Password Reset ---\n";
 
 	string username;
@@ -143,7 +188,7 @@ void resetPassword() {
 
 	int userIndex = -1;
 	for (int i = 0; i < userCount; ++i) {
-		if (usernames[i] == username) {
+		if (users[i].usernames == username) {
 			userIndex = i;
 			break;
 		}
@@ -153,7 +198,7 @@ void resetPassword() {
 		string newPassword;
 		cout << "Enter your new password: ";
 		cin >> newPassword;
-		passwords[userIndex] = newPassword;
+		users[userIndex].passwords = newPassword;
 		cout << "Password for user '" << username << "' has been reset successfully.\n";
 	}
 	else {
@@ -172,13 +217,12 @@ void Menu() {
 }
 
 
-Order ticket()
+Order ticket(Order*orders)
 {
 	char dash1, dash2, tf;
 	int trainno, deptime, deptime1, deptime2, pax, time1 = 0, day, month, year;
 	double money = 0.0;
 	string date1,origin,destination;
-	string ticketDetails[3];
 
 	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 
@@ -282,27 +326,21 @@ Order ticket()
 	}
 	cout << endl;
 
-	do
-	{
-		try {
-			tf = 0;
-			cout << "Departure date (dd/mm/yyyy) : ";
-			cin >> day >> dash1 >> month >> dash2 >> year;
-			if (month < 1 || month >12) {
-				cout << "Invalid Input\n";
-				tf = 1;
-			}
-			else if (day <1 || day > days_inMonth[month]) {
-				cout << "Invalid Input\n";
-				tf = 1;
-			}
-			else if (year < 2025) {
-				cout << "Invalid Input\n";
-				tf = 1;
-			}
+	do {
+		tf = 0;
+		cout << "Departure date (dd/mm/yyyy) : ";
+		if (!(cin >> day >> dash1 >> month >> dash2 >> year)) {
+			cout << "Invalid date.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			tf = 1;
+			continue;
 		}
-		catch(...){
-			cout << "Invalid Input\n";
+		if (month < 1 || month > 12) tf = 1;
+		else {
+			int maxDay = days_inMonth[month];
+			if (day <1 || day > days_inMonth[month]) tf = 1;
+			if (day < 1 || day > maxDay || year < 2025) tf = 1;
 		}
 	} while (tf != 0);
 
@@ -319,6 +357,7 @@ Order ticket()
 	newOrder.time = time1;
 	newOrder.origin = origin;
 	newOrder.destination = destination;
+	newOrder.username = loggedInUser;
 
 	orders[orderCount++] = newOrder;
 
@@ -339,7 +378,7 @@ Order ticket()
 	return newOrder;
 }
 
-double invoice(int start, int end)
+double invoice(int start, int end, Order*orders)
 {
 	double total = 0.0, amount = 0.0, tax1 = 0.0, subtotal=0.0;
 	int totalticket=0;
@@ -367,7 +406,7 @@ double invoice(int start, int end)
 }
 
 
-void orderhistory()
+void orderhistory(Order*orders)
 {
 	if (orderCount == 0) {
 		cout << "\nNo previous orders found.\n";
@@ -404,6 +443,8 @@ int main()
 {
 	int menu_choose = 0;
 	int choice1;
+	user users[100]; 
+	Order orders[100]; // store up to ? orders
 
 	cout << "    __________   ========  |      __      |   =====       \n";
 	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
@@ -416,141 +457,146 @@ int main()
 
 
 	do {
+		usersfromfile(users);
+		ordersfromfile(orders);
 		displayMenu();
 		cout << "Enter your choice: ";
 		cin >> choice1;
 
 		switch (choice1) {
 		case 1:
+				registerUser(users);
+				saveusers(users);
 		case 2:
-			if (choice1 == 1) {
-				registerUser();
-			}
-			else if (choice1 == 2) {
-				loginUser();
-			}
+			if (loginUser(users) == 1) {
+				do {
+					clearScreen();
+					Menu();
+					cin >> menu_choose;
 
-			do {
-				clearScreen();
-				Menu();
-				cin >> menu_choose;
+					if (menu_choose == 1)
+					{
+						int start = orderCount;
 
-				if (menu_choose == 1)
-				{
-					int start = orderCount;
+						ticket(orders);
+						saveorders(orders);
 
-					ticket();
+						do {
+							cout << "\nDo you need to add on?(Y/N) : ";
+							cin >> choice;
+							cout << endl;
 
-					do {
-						cout << "\nDo you need to add on?(Y/N) : ";
-						cin >> choice;
+							if (choice == 'y' || choice == 'Y') {
+								ticket(orders);
+								saveorders(orders);
+							}
+							else if (choice == 'N' || choice == 'n') {
+								break;
+							}
+							else {
+								cout << "Invalid" << endl;
+							}
+						} while (choice != 'n' && choice != 'N');
+
+						cout << "==================\n";
+						cout << "INVOICE SUMMARY\n";
+						cout << "==================\n";
+
+						invoice(start, orderCount,orders);
+
+						int payment;
+						string method;
+						do {
+							cout << "\nPlease select your payment menthod." << endl;
+							cout << "1. E-wallet" << endl;
+							cout << "2. Credit card" << endl;
+							cout << "3. Debit card" << endl;
+							cout << "\nPlease select : ";
+							cin >> payment;
+							if (payment == 1) {
+								method = "E-wallet\n";
+							}
+							else if (payment == 2) {
+								method = "Credit card\n";
+							}
+							else if (payment == 3) {
+								method = "Debit card\n";
+							}
+							else {
+								method = "Invalid input! Please try again.\n";
+							}
+						} while (payment <= 0 || payment > 3);
 						cout << endl;
 
-						if (choice == 'y' || choice == 'Y') {
-							ticket();
+						auto now = chrono::system_clock::now();
+						time_t currentTime = chrono::system_clock::to_time_t(now);
+
+						// Use localtime_s (safe version for MSVC)
+						struct tm localTime;
+						localtime_s(&localTime, &currentTime);
+
+						int receipt;
+						srand(time(0));
+						receipt = rand() % 9999 + 1000;
+
+						cout << "===============================\n";
+						cout << setw(10) << "RECEIPT" << endl;
+						cout << "===============================\n";
+						cout << "Receipt No : " << receipt << endl;
+						cout << "Date : " << localTime.tm_mday << "/"
+							<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
+						cout << endl;
+						double total = invoice(start, orderCount,orders);
+						cout << "------------------------------------------------------------------------------------\n";
+						cout << "Payment menthod : " << method << endl;
+						cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
+						cout << "------------------------------------------------------------------------------------\n";
+						cout << "THANK YOU.\n";
+
+						cout << "\nPress ENTER to continue.";
+						cin.ignore();
+						cin.get();
+
+						menu_choose = 0;
+					}
+					else if (menu_choose == 2) {
+						orderhistory(orders);
+
+						cout << "Press ENTER to back to Main Menu.";
+						cin.ignore();
+						cin.get();
+
+						menu_choose = 0;
+					}
+					else if (menu_choose == 3) {
+						cout << "1. EXIT\n";
+						cout << "2. GO BACK TO LOGIN SCREEN\n";
+						cout << "Enter your choice : ";
+						cin >> choice1;
+						if (choice1 == 1) {
+							cout << "\nTHANK YOU! Have a nice day.\n";
+							return 0;
 						}
-						else if (choice == 'N' || choice == 'n') {
+						else if (choice1 == 2) {
 							break;
 						}
-						else {
-							cout << "Invalid" << endl;
-						}
-					} while (choice != 'n' && choice != 'N');
-
-					cout << "==================\n";
-					cout << "INVOICE SUMMARY\n";
-					cout << "==================\n";
-
-					invoice(start, orderCount);
-
-					int payment;
-					string method;
-					do {
-						cout << "\nPlease select your payment menthod." << endl;
-						cout << "1. E-wallet" << endl;
-						cout << "2. Credit card" << endl;
-						cout << "3. Debit card" << endl;
-						cout << "\nPlease select : ";
-						cin >> payment;
-						if (payment == 1) {
-							method = "E-wallet\n";
-						}
-						else if (payment == 2) {
-							method = "Credit card\n";
-						}
-						else if (payment == 3) {
-							method = "Debit card\n";
-						}
-						else {
-							method = "Invalid input! Please try again.\n";
-						}
-					} while (payment <= 0 || payment > 3);
-					cout << endl;
-
-					auto now = chrono::system_clock::now();
-					time_t currentTime = chrono::system_clock::to_time_t(now);
-
-					// Use localtime_s (safe version for MSVC)
-					struct tm localTime;
-					localtime_s(&localTime, &currentTime);
-
-					int receipt;
-					srand(time(0));
-					receipt = rand() % 9999 + 1000;
-
-					cout << "===============================\n";
-					cout << setw(10) << "RECEIPT" << endl;
-					cout << "===============================\n";
-					cout << "Receipt No : " << receipt << endl;
-					cout << "Date : " << localTime.tm_mday << "/"
-						<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
-					cout << endl;
-					double total = invoice(start, orderCount);
-					cout << "------------------------------------------------------------------------------------\n";
-					cout << "Payment menthod : " << method << endl;
-					cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
-					cout << "------------------------------------------------------------------------------------\n";
-					cout << "THANK YOU.\n";
-
-					cout << "\nPress ENTER to continue.";
-					cin.ignore();
-					cin.get();
-
-					menu_choose = 0;
-				}
-				else if (menu_choose == 2) {
-					orderhistory();
-
-					cout << "Press ENTER to back to Main Menu.";
-					cin.ignore();
-					cin.get();
-
-					menu_choose == 0;
-				}
-				else if (menu_choose == 3) {
-					cout << "1. EXIT\n";
-					cout << "2. GO BACK TO LOGIN SCREEN\n";
-					cout << "Enter your choice : ";
-					cin >> choice1;
-					if (choice1 == 1) {
-						cout << "\nTHANK YOU! Have a nice day.\n";
-						return 0;
 					}
-					else if (choice1 == 2) {
-						break;
+					else {
+						cout << "Invalid Input! Going back to main menu.\n";
 					}
-				}
-				else {
-					cout << "Invalid Input! Going back to main menu.\n";
-				}
 
-			} while (menu_choose !=3);
-			break;
+				} while (menu_choose != 3);
+				break;
+			}
+			else {
+				break;
+			}
 		case 3:
 			logoutUser();
 			break;
 		case 4:
-			resetPassword();
+			resetPassword(users);
+			saveusers(users);
 			break;
 		case 5:
 			cout << "\nThank you for using TWD Train Ticket System. Goodbye!\n";
