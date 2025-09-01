@@ -393,7 +393,7 @@ void orderhistory()
 		}
 		cout << "Number of pax : " << orders[i].pax << endl;
 		cout << "Price per ticket : RM " <<fixed <<setprecision(2)<< orders[i].money << endl;
-		cout << "Total payable amount : RM" << total << endl;
+		cout << "Total payable amount : RM " << total << endl;
 		cout << "---------------------------------\n";
 	}
 }
