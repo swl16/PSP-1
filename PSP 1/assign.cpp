@@ -520,6 +520,7 @@ int main()
 				}
 				else if (menu_choose == 2) {
 					orderhistory();
+
 					cout << "Press ENTER to back to Main Menu.";
 					cin.ignore();
 					cin.get();
@@ -543,7 +544,7 @@ int main()
 					cout << "Invalid Input! Going back to main menu.\n";
 				}
 
-			} while (menu_choose == 0);
+			} while (menu_choose !=3);
 			break;
 		case 3:
 			logoutUser();
