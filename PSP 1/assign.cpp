@@ -234,14 +234,13 @@ Order ticket(Order*orders)
 	cout << left << setw(10) << "| 002      | Kajang       | JB Sentral  |" << endl;
 	cout << left << setw(10) << "| 003      | KL Sentral   | Ipoh        |" << endl;
 	cout << left << setw(10) << "=========================================" << endl;
-
-	cout << "\nPlease choose your train number : ";
-	cin >> trainno;
-	if (trainno < 1 || trainno > 3) {
-		cout << "Invalid train number.\n";
-		return Order{};
-	}
-
+	do {
+		cout << "\nPlease choose your train number : ";
+		cin >> trainno;
+		if (trainno < 1 || trainno > 3) {
+			cout << "Invalid train number. Please try again. \n";
+		}
+	} while (trainno <= 0 || trainno > 3);
 	cout << endl;
 
 	switch (trainno) {
@@ -255,20 +254,25 @@ Order ticket(Order*orders)
 		cout << left << setw(5) << "| 2  | 12:00PM        | RM 96.00 |" << endl;
 		cout << left << setw(5) << "| 3  | 15:00PM        | RM 96.00 |" << endl;
 		cout << left << setw(5) << "==================================" << endl;
-		cout << "\nPlease choose your departure time : ";
-		cin >> deptime;
-		if (deptime == 1) {
-			time1 = dtime[0];
-			money = fare[2];
-		}
-		else if (deptime == 2) {
-			time1 = dtime[2];
-			money = fare[2];
-		}
-		else if (deptime == 3) {
-			time1 = dtime[5];
-			money = fare[2];
-		}
+		do {
+			cout << "\nPlease choose your departure time : ";
+			cin >> deptime;
+			if (deptime == 1) {
+				time1 = dtime[0];
+				money = fare[2];
+			}
+			else if (deptime == 2) {
+				time1 = dtime[2];
+				money = fare[2];
+			}
+			else if (deptime == 3) {
+				time1 = dtime[5];
+				money = fare[2];
+			}
+			else {
+				cout << "Invalid time. Please try again.\n";
+			}
+		} while (deptime < 1 || deptime>3);
 		break;
 	case 2:
 		origin = "Kajang";
@@ -280,20 +284,25 @@ Order ticket(Order*orders)
 		cout << left << setw(5) << "| 2  | 13:00PM        | RM 50.00 |" << endl;
 		cout << left << setw(5) << "| 3  | 16:00PM        | RM 50.00 |" << endl;
 		cout << left << setw(5) << "==================================" << endl;
-		cout << "\nPlease choose your departure time : ";
-		cin >> deptime1;
-		if (deptime1 == 1) {
-			time1 = dtime[0];
-			money = fare[0];
-		}
-		else if (deptime1 == 2) {
-			time1 = dtime[3];
-			money = fare[0];
-		}
-		else if (deptime1 == 3) {
-			time1 = dtime[6];
-			money = fare[0];
-		}
+		do {
+			cout << "\nPlease choose your departure time : ";
+			cin >> deptime1;
+			if (deptime1 == 1) {
+				time1 = dtime[0];
+				money = fare[0];
+			}
+			else if (deptime1 == 2) {
+				time1 = dtime[3];
+				money = fare[0];
+			}
+			else if (deptime1 == 3) {
+				time1 = dtime[6];
+				money = fare[0];
+			}
+			else {
+				cout << "Invalid time. Please try again.\n";
+			}
+		} while (deptime < 1 || deptime>3);
 		break;
 	case 3:
 		origin = "KL Sentral";
@@ -305,20 +314,25 @@ Order ticket(Order*orders)
 		cout << left << setw(5) << "| 2  | 14:00PM        | RM 56.00 |" << endl;
 		cout << left << setw(5) << "| 3  | 16:00PM        | RM 56.00 |" << endl;
 		cout << left << setw(5) << "==================================" << endl;
-		cout << "\nPlease choose your departure time : ";
-		cin >> deptime2;
-		if (deptime2 == 1) {
-			time1 = dtime[1];
-			money = fare[1];
-		}
-		else if (deptime2 == 2) {
-			time1 = dtime[4];
-			money = fare[1];
-		}
-		else if (deptime2 == 3) {
-			time1 = dtime[6];
-			money = fare[1];
-		}
+		do {
+			cout << "\nPlease choose your departure time : ";
+			cin >> deptime2;
+			if (deptime2 == 1) {
+				time1 = dtime[1];
+				money = fare[1];
+			}
+			else if (deptime2 == 2) {
+				time1 = dtime[4];
+				money = fare[1];
+			}
+			else if (deptime2 == 3) {
+				time1 = dtime[6];
+				money = fare[1];
+			}
+			else {
+				cout << "Invalid time. Please try again.\n";
+			}
+		} while (deptime < 1 || deptime>3);
 		break;
 	default:
 		cout << "Invalid";
@@ -342,6 +356,7 @@ Order ticket(Order*orders)
 			if (day <1 || day > days_inMonth[month]) tf = 1;
 			if (day < 1 || day > maxDay || year < 2025) tf = 1;
 		}
+		if (tf)cout << "Invalid date\n";
 	} while (tf != 0);
 
 	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
