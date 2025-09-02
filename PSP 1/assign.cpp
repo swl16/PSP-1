@@ -64,7 +64,7 @@ void saveorders(Order*orders)
 	for (int i = 0;i < orderCount;i++)
 	{
 		out << orders[i].trainno << " " << orders[i].origin << " " << orders[i].destination << " "
-			<< orders[i].date << " " << orders[i].time << " " << orders[i].pax << " " << orders[i].money << endl;
+			<< orders[i].date << " " << orders[i].time << " " << orders[i].pax << " " << orders[i].money << " " << orders[i].username << endl;
 	}
 	out.close();
 }
@@ -74,12 +74,13 @@ void ordersfromfile(Order*orders)
 	const string filename = "orders.txt";
 	ifstream in(filename);
 	if (!in) {
+		cout << "Error opening orders.txt";
 		return;
 	}
 	orderCount = 0;
 
 	while (in >> orders[orderCount].trainno >> orders[orderCount].origin >> orders[orderCount].destination
-		>> orders[orderCount].date >> orders[orderCount].time >> orders[orderCount].pax >> orders[orderCount].money) {
+		>> orders[orderCount].date >> orders[orderCount].time >> orders[orderCount].pax >> orders[orderCount].money >> orders[orderCount].username) {
 		orderCount++;
 	}
 	in.close();
@@ -430,25 +431,35 @@ void orderhistory(Order*orders)
 	cout << "=================\n";
 	cout << "  ORDER HISTORY\n";
 	cout << "=================\n";
-	for (int i = 0;i < orderCount;i++) {
-		double subtotal = orders[i].money * orders[i].pax;
-		double tax1 = subtotal * tax;
-		double total = subtotal + process + tax1;
 
-		cout << "Order #" << (i + 1) << endl;
-		cout << "Train No : " << orders[i].trainno << "  " << orders[i].origin << " --> " << orders[i].destination << endl;
-		cout << "Departure Date : " << orders[i].date << endl;
-		cout << "Departure Time : " << orders[i].time << ":00";
-		if (orders[i].time >= 12) {
-			cout << " PM\n";
+	bool found = false;
+	for (int i = 0;i < orderCount;i++) {
+		// Only show orders belonging to the currently logged-in user
+		if (orders[i].username == loggedInUser) {
+			found = true;
+
+			double subtotal = orders[i].money * orders[i].pax;
+			double tax1 = subtotal * tax;
+			double total = subtotal + process + tax1;
+
+			cout << "Order #" << (i + 1) << endl;
+			cout << "Train No : " << orders[i].trainno << "  " << orders[i].origin << " --> " << orders[i].destination << endl;
+			cout << "Departure Date : " << orders[i].date << endl;
+			cout << "Departure Time : " << orders[i].time << ":00";
+			if (orders[i].time >= 12) {
+				cout << " PM\n";
+			}
+			else {
+				cout << " AM\n";
+			}
+			cout << "Number of pax : " << orders[i].pax << endl;
+			cout << "Price per ticket : RM " << fixed << setprecision(2) << orders[i].money << endl;
+			cout << "Total payable amount : RM " << total << endl;
+			cout << "---------------------------------\n";
 		}
-		else {
-			cout << " AM\n";
-		}
-		cout << "Number of pax : " << orders[i].pax << endl;
-		cout << "Price per ticket : RM " <<fixed <<setprecision(2)<< orders[i].money << endl;
-		cout << "Total payable amount : RM " << total << endl;
-		cout << "---------------------------------\n";
+	}
+	if (!found) {
+		cout << "\nNo previous orders found for user: " << loggedInUser << endl;
 	}
 }
 
