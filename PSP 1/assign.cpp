@@ -302,7 +302,7 @@ Order ticket(Order*orders)
 			else {
 				cout << "Invalid time. Please try again.\n";
 			}
-		} while (deptime < 1 || deptime>3);
+		} while (deptime1 < 1 || deptime1>3);
 		break;
 	case 3:
 		origin = "KL Sentral";
@@ -332,7 +332,7 @@ Order ticket(Order*orders)
 			else {
 				cout << "Invalid time. Please try again.\n";
 			}
-		} while (deptime < 1 || deptime>3);
+		} while (deptime2 < 1 || deptime2>3);
 		break;
 	default:
 		cout << "Invalid";
@@ -584,17 +584,22 @@ int main()
 						menu_choose = 0;
 					}
 					else if (menu_choose == 3) {
-						cout << "1. EXIT\n";
-						cout << "2. GO BACK TO LOGIN SCREEN\n";
-						cout << "Enter your choice : ";
-						cin >> choice1;
-						if (choice1 == 1) {
-							cout << "\nTHANK YOU! Have a nice day.\n";
-							return 0;
-						}
-						else if (choice1 == 2) {
-							break;
-						}
+						do {
+							cout << "1. EXIT\n";
+							cout << "2. GO BACK TO LOGIN SCREEN\n";
+							cout << "Enter your choice : ";
+							cin >> choice1;
+							if (choice1 == 1) {
+								cout << "\nTHANK YOU! Have a nice day.\n";
+								return 0;
+							}
+							else if (choice1 == 2) {
+								break;
+							}
+							else {
+								cout << "Invalid input. Please try again.\n";
+							}
+						} while (choice1 < 1 || choice1 > 2);
 					}
 					else {
 						cout << "Invalid Input! Going back to main menu.\n";
