@@ -538,7 +538,7 @@ int main()
 								method = "Debit card\n";
 							}
 							else {
-								method = "Invalid input! Please try again.\n";
+								cout << "Invalid input! Please try again.\n";
 							}
 						} while (payment <= 0 || payment > 3);
 						cout << endl;
