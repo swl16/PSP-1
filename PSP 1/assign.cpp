@@ -481,10 +481,10 @@ int main()
 
 	cout << "\nWelcome to TWD Train Ticket Booking System!\n\n";
 
+	usersfromfile(users);
+	ordersfromfile(orders);
 
 	do {
-		usersfromfile(users);
-		ordersfromfile(orders);
 		displayMenu();
 		cout << "Enter your choice: ";
 		cin >> choice1;
