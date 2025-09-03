@@ -103,8 +103,15 @@ void displayMenu() {
 
 
 void registerUser(user*users) {
+
 	bool found = false;
-	usersfromfile(users);
+
+	for (int i = 0;i < userCount;i++) {
+		if (users[i].usernames == loggedInUser) {
+			found = true;
+			cout << "You have registered. Please proceed to login page.\n";
+		}
+	}
 	if (!found) {
 		cout << "\n--- User Registration ---\n";
 		user registeringUser = user();
@@ -119,13 +126,9 @@ void registerUser(user*users) {
 		registeringUser.passwords = password;
 		users[userCount] = registeringUser;
 		userCount++;
-	}
-	else{
-		found = true;
-		cout << "You have registered. Please proceed to login page.\n";
-	}
 
-	cout << "Registration successful!\n";
+		cout << "Registration successful!\n";
+	}
 
 	cout << "\nPress ENTER to continue.";
 	cin.ignore();
