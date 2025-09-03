@@ -108,20 +108,29 @@ void registerUser(user*users) {
 		user registeringUser = user();
 
 		string username, password;
-		cout << "Enter a new username(without space): ";
-		cin >> username;
+
+		while (true) {
+			cout << "Enter a new username (without space): ";
+			cin >> username;
+
+			bool usernameExists = false;
+			for (int i = 0; i < userCount; i++) {
+				if (users[i].usernames == username) {
+					cout << "Username already exists. Please try again.\n";
+					usernameExists = true;
+					break;
+				}
+			}
+
+			if (!usernameExists) {
+				break; // Valid username found
+			}
+			cout << "\nPress ENTER to continue.";
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin.get();
+		}
 		cout << "Enter a new password: ";
 		cin >> password;
-
-		for (int i = 0; i < userCount; i++) {
-			if (users[i].usernames == username && users[i].passwords==password) {
-				cout << "You have registered. Please proceed to login.\n";
-				cout << "\nPress ENTER to continue.";
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cin.get();
-				return;
-			}
-		}
 		
 		registeringUser.usernames = username;
 		registeringUser.passwords = password;
@@ -367,7 +376,7 @@ Order ticket(Order*orders)
 		else {
 			int maxDay = days_inMonth[month];
 			if (day <1 || day > days_inMonth[month]) tf = 1;
-			if (day < 1 || day > maxDay || year < 2025) tf = 1;
+			if (day < 1 || day > maxDay || year < 2025 || year > 2029) tf = 1;
 		}
 		if (tf)cout << "Invalid date\n";
 	} while (tf != 0);
