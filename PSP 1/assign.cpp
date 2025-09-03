@@ -221,7 +221,7 @@ void Menu() {
 Order ticket(Order*orders)
 {
 	char dash1, dash2, tf;
-	char trainno, deptime, deptime1, deptime2, pax ;
+	int trainno, deptime, deptime1, deptime2, pax ;
 	int time1=0,day, month, year;
 	double money = 0.0;
 	string date1,origin,destination;
@@ -239,14 +239,14 @@ Order ticket(Order*orders)
 	do {
 		cout << "\nPlease choose your train number : ";
 		cin >> trainno;
-		if (trainno <'1' || trainno > '3') {
+		if (trainno <1 || trainno > 3) {
 			cout << "Invalid train number. Please try again. \n";
 		}
-	} while (trainno <= '0' || trainno > '3');
+	} while (trainno <= 0 || trainno > 3);
 	cout << endl;
 
 	switch (trainno) {
-	case '1':
+	case 1:
 		origin = "Kuala Lumpur";
 		destination = "Butterworth";
 		cout << left << setw(5) << "==================================" << endl;
@@ -259,24 +259,24 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime;
-			if (deptime == '1') {
+			if (deptime == 1) {
 				time1 = dtime[0];
 				money = fare[2];
 			}
-			else if (deptime == '2') {
+			else if (deptime == 2) {
 				time1 = dtime[2];
 				money = fare[2];
 			}
-			else if (deptime == '3') {
+			else if (deptime == 3) {
 				time1 = dtime[5];
 				money = fare[2];
 			}
 			else {
 				cout << "Invalid time. Please try again.\n";
 			}
-		} while (deptime < '1' || deptime>'3');
+		} while (deptime < 1 || deptime>3);
 		break;
-	case '2':
+	case 2:
 		origin = "Kajang";
 		destination = "JB Sentral";
 		cout << left << setw(5) << "==================================" << endl;
@@ -289,24 +289,24 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime1;
-			if (deptime1 == '1') {
+			if (deptime1 == 1) {
 				time1 = dtime[0];
 				money = fare[0];
 			}
-			else if (deptime1 == '2') {
+			else if (deptime1 == 2) {
 				time1 = dtime[3];
 				money = fare[0];
 			}
-			else if (deptime1 == '3') {
+			else if (deptime1 == 3) {
 				time1 = dtime[6];
 				money = fare[0];
 			}
 			else {
 				cout << "Invalid time. Please try again.\n";
 			}
-		} while (deptime1 < '1' || deptime1>'3');
+		} while (deptime1 < 1 || deptime1>3);
 		break;
-	case '3':
+	case 3:
 		origin = "KL Sentral";
 		destination = "Ipoh";
 		cout << left << setw(5) << "==================================" << endl;
@@ -319,22 +319,22 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime2;
-			if (deptime2 == '1') {
+			if (deptime2 == 1) {
 				time1 = dtime[1];
 				money = fare[1];
 			}
-			else if (deptime2 == '2') {
+			else if (deptime2 == 2) {
 				time1 = dtime[4];
 				money = fare[1];
 			}
-			else if (deptime2 == '3') {
+			else if (deptime2 == 3) {
 				time1 = dtime[6];
 				money = fare[1];
 			}
 			else {
 				cout << "Invalid time. Please try again.\n";
 			}
-		} while (deptime2 < '1' || deptime2>'3');
+		} while (deptime2 < 1 || deptime2>3);
 		break;
 	default:
 		cout << "Invalid";
