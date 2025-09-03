@@ -246,7 +246,7 @@ Order ticket(Order*orders)
 	cout << endl;
 
 	switch (trainno) {
-	case 1:
+	case '1':
 		origin = "Kuala Lumpur";
 		destination = "Butterworth";
 		cout << left << setw(5) << "==================================" << endl;
@@ -276,7 +276,7 @@ Order ticket(Order*orders)
 			}
 		} while (deptime < '1' || deptime>'3');
 		break;
-	case 2:
+	case '2':
 		origin = "Kajang";
 		destination = "JB Sentral";
 		cout << left << setw(5) << "==================================" << endl;
@@ -306,7 +306,7 @@ Order ticket(Order*orders)
 			}
 		} while (deptime1 < '1' || deptime1>'3');
 		break;
-	case 3:
+	case '3':
 		origin = "KL Sentral";
 		destination = "Ipoh";
 		cout << left << setw(5) << "==================================" << endl;
