@@ -467,8 +467,7 @@ void orderhistory(Order*orders)
 
 int main()
 {
-	int menu_choose = 0;
-	int choice1;
+	char menu_choose = '0', choice1, choice2;
 	user users[100]; 
 	Order orders[100]; // store up to ? orders
 
@@ -490,17 +489,17 @@ int main()
 		cin >> choice1;
 
 		switch (choice1) {
-		case 1:
+		case '1':
 				registerUser(users);
 				saveusers(users);
-		case 2:
+		case '2':
 			if (loginUser(users) == 1) {
 				do {
 					clearScreen();
 					Menu();
 					cin >> menu_choose;
 
-					if (menu_choose == 1)
+					if (menu_choose == '1')
 					{
 						int start = orderCount;
 
@@ -583,59 +582,59 @@ int main()
 						cin.ignore();
 						cin.get();
 
-						menu_choose = 0;
+						menu_choose = '0';
 					}
-					else if (menu_choose == 2) {
+					else if (menu_choose == '2') {
 						orderhistory(orders);
 
 						cout << "Press ENTER to back to Main Menu.";
 						cin.ignore();
 						cin.get();
 
-						menu_choose = 0;
+						menu_choose = '0';
 					}
-					else if (menu_choose == 3) {
+					else if (menu_choose == '3') {
 						do {
 							cout << "1. EXIT\n";
 							cout << "2. GO BACK TO LOGIN SCREEN\n";
 							cout << "Enter your choice : ";
-							cin >> choice1;
-							if (choice1 == 1) {
+							cin >> choice2;
+							if (choice2 == '1') {
 								cout << "\nTHANK YOU! Have a nice day.\n";
 								return 0;
 							}
-							else if (choice1 == 2) {
+							else if (choice2 == '2') {
 								break;
 							}
 							else {
 								cout << "Invalid input. Please try again.\n";
 							}
-						} while (choice1 < 1 || choice1 > 2);
+						} while (choice2 != '1' && choice2 != '2');
 					}
 					else {
 						cout << "Invalid Input! Going back to main menu.\n";
 					}
 
-				} while (menu_choose != 3);
+				} while (menu_choose != '3');
 				break;
 			}
 			else {
 				break;
 			}
-		case 3:
+		case '3':
 			logoutUser();
 			break;
-		case 4:
+		case '4':
 			resetPassword(users);
 			saveusers(users);
 			break;
-		case 5:
+		case '5':
 			cout << "\nThank you for using TWD Train Ticket System. Goodbye!\n";
 			break;
 		default:
 			cout << "\nInvalid choice. Please try again.\n";
 		}
-	} while (choice1 != 5);
+	} while (choice1 != '5');
 
 	return 0;
 }
