@@ -259,6 +259,11 @@ Order ticket(Order*orders)
 	do {
 		cout << "\nPlease choose your train number : ";
 		cin >> trainno;
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore();
+		}
 		if (trainno <1 || trainno > 3) {
 			cout << "Invalid train number. Please try again. \n";
 		}
@@ -279,6 +284,11 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime;
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore();
+			}
 			if (deptime == 1) {
 				time1 = dtime[0];
 				money = fare[2];
@@ -309,6 +319,11 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime1;
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore();
+			}
 			if (deptime1 == 1) {
 				time1 = dtime[0];
 				money = fare[0];
@@ -339,6 +354,11 @@ Order ticket(Order*orders)
 		do {
 			cout << "\nPlease choose your departure time : ";
 			cin >> deptime2;
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore();
+			}
 			if (deptime2 == 1) {
 				time1 = dtime[1];
 				money = fare[1];
