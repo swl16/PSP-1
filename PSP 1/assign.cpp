@@ -221,7 +221,8 @@ void Menu() {
 Order ticket(Order*orders)
 {
 	char dash1, dash2, tf;
-	int trainno, deptime, deptime1, deptime2, pax, time1 = 0, day, month, year;
+	char trainno, deptime, deptime1, deptime2, pax ;
+	int time1=0,day, month, year;
 	double money = 0.0;
 	string date1,origin,destination;
 
