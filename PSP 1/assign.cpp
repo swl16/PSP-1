@@ -103,19 +103,27 @@ void displayMenu() {
 
 
 void registerUser(user*users) {
-	cout << "\n--- User Registration ---\n";
-	user registeringUser = user();
+	bool found = false;
+	usersfromfile(users);
+	if (!found) {
+		cout << "\n--- User Registration ---\n";
+		user registeringUser = user();
 
-	string username, password;
-	cout << "Enter a new username(without space): ";
-	cin >> username;
-	 cout << "Enter a new password: ";
-	cin >> password;
+		string username, password;
+		cout << "Enter a new username(without space): ";
+		cin >> username;
+		cout << "Enter a new password: ";
+		cin >> password;
 
-	registeringUser.usernames = username;
-	registeringUser.passwords = password;
-	users[userCount] = registeringUser;
-	userCount++;
+		registeringUser.usernames = username;
+		registeringUser.passwords = password;
+		users[userCount] = registeringUser;
+		userCount++;
+	}
+	else{
+		found = true;
+		cout << "You have registered. Please proceed to login page.\n";
+	}
 
 	cout << "Registration successful!\n";
 
