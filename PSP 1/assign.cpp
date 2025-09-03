@@ -110,6 +110,7 @@ void registerUser(user*users) {
 		if (users[i].usernames == loggedInUser) {
 			found = true;
 			cout << "You have registered. Please proceed to login page.\n";
+			return;
 		}
 	}
 	if (!found) {
