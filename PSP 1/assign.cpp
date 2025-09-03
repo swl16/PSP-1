@@ -234,7 +234,7 @@ Order ticket(Order*orders)
 	char dash1, dash2, tf;
 	int trainno, deptime, deptime1, deptime2, pax ;
 	int time1=0,day, month, year;
-	double money = 0.0;
+	double money = 0.0, price = 0.0;
 	string date1,origin,destination;
 
 	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
@@ -374,8 +374,13 @@ Order ticket(Order*orders)
 
 	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
 
-	cout << "Number of pax : ";
-	cin >> pax;
+	do {
+		cout << "Number of pax : ";
+		cin >> pax;
+		if (pax > 30) {
+			cout << "Maximum passenger is 30. Please try again.\n";
+		}
+	} while (pax > 30);
 
 	Order newOrder;
 	newOrder.trainno = trainno;
@@ -401,7 +406,8 @@ Order ticket(Order*orders)
 	}
 	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
-	cout << "Price : RM " << money << " per person" << endl;
+	price = money * pax;
+	cout << "Price : RM " << price << endl;
 
 	return newOrder;
 }
@@ -550,6 +556,11 @@ int main()
 							cout << "3. Debit card" << endl;
 							cout << "\nPlease select : ";
 							cin >> payment;
+							if (cin.fail())
+							{
+								cin.clear();
+								cin.ignore();
+							}
 							if (payment == 1) {
 								method = "E-wallet\n";
 							}
@@ -562,6 +573,7 @@ int main()
 							else {
 								cout << "Invalid input! Please try again.\n";
 							}
+							
 						} while (payment <= 0 || payment > 3);
 						cout << endl;
 
