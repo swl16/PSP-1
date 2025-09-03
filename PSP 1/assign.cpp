@@ -104,16 +104,6 @@ void displayMenu() {
 
 void registerUser(user*users) {
 
-	bool found = false;
-
-	for (int i = 0;i < userCount;i++) {
-		if (users[i].usernames == loggedInUser) {
-			found = true;
-			cout << "You have registered. Please proceed to login page.\n";
-			return;
-		}
-	}
-	if (!found) {
 		cout << "\n--- User Registration ---\n";
 		user registeringUser = user();
 
@@ -123,13 +113,22 @@ void registerUser(user*users) {
 		cout << "Enter a new password: ";
 		cin >> password;
 
+		for (int i = 0; i < userCount; i++) {
+			if (users[i].usernames == username && users[i].passwords==password) {
+				cout << "You have registered. Please proceed to login.\n";
+				cout << "\nPress ENTER to continue.";
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cin.get();
+				return;
+			}
+		}
+		
 		registeringUser.usernames = username;
 		registeringUser.passwords = password;
 		users[userCount] = registeringUser;
 		userCount++;
 
 		cout << "Registration successful!\n";
-	}
 
 	cout << "\nPress ENTER to continue.";
 	cin.ignore();
