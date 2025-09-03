@@ -1,5 +1,5 @@
-if cin.fail()
-{
-	cin.clear()
-		cin.ignore();
-}
+//if cin.fail()
+//{
+//	cin.clear()
+//		cin.ignore();
+//}

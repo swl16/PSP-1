@@ -486,7 +486,7 @@ void orderhistory(Order*orders)
 int main()
 {
 	char menu_choose = '0', choice1, choice2;
-	user users[100]; 
+	user users[100];
 	Order orders[100]; // store up to ? orders
 
 	cout << "    __________   ========  |      __      |   =====       \n";
@@ -508,8 +508,8 @@ int main()
 
 		switch (choice1) {
 		case '1':
-				registerUser(users);
-				saveusers(users);
+			registerUser(users);
+			saveusers(users);
 		case '2':
 			if (loginUser(users) == 1) {
 				do {
@@ -545,7 +545,7 @@ int main()
 						cout << "INVOICE SUMMARY\n";
 						cout << "==================\n";
 
-						invoice(start, orderCount,orders);
+						invoice(start, orderCount, orders);
 
 						int payment;
 						string method;
@@ -573,7 +573,7 @@ int main()
 							else {
 								cout << "Invalid input! Please try again.\n";
 							}
-							
+
 						} while (payment <= 0 || payment > 3);
 						cout << endl;
 
@@ -595,7 +595,7 @@ int main()
 						cout << "Date : " << localTime.tm_mday << "/"
 							<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 						cout << endl;
-						double total = invoice(start, orderCount,orders);
+						double total = invoice(start, orderCount, orders);
 						cout << "------------------------------------------------------------------------------------\n";
 						cout << "Payment menthod : " << method << endl;
 						cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
