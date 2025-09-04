@@ -22,9 +22,6 @@ char choice;
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
 double fare[] = { 50.00,56.00,96.00 };
 
-
-
-
 int orderCount = 0;
 
 void saveusers(user* users) {
