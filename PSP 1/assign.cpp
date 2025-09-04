@@ -289,7 +289,6 @@ Order ticket(Order*orders)
 			if (month < 1 || month > 12) tf = 1;
 			else {
 				int maxDay = days_inMonth[month];
-				if (day <1 || day > days_inMonth[month]) tf = 1;
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
@@ -350,7 +349,6 @@ Order ticket(Order*orders)
 			if (month < 1 || month > 12) tf = 1;
 			else {
 				int maxDay = days_inMonth[month];
-				if (day <1 || day > days_inMonth[month]) tf = 1;
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
@@ -411,7 +409,6 @@ Order ticket(Order*orders)
 			if (month < 1 || month > 12) tf = 1;
 			else {
 				int maxDay = days_inMonth[month];
-				if (day <1 || day > days_inMonth[month]) tf = 1;
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
