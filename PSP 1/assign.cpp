@@ -382,6 +382,14 @@ Order ticket(Order*orders)
 	}
 	cout << endl;
 
+	time_t timenow = time(0);
+	struct tm now;
+	localtime_s(&now, &timenow);
+
+	int todayDay = now.tm_mday;
+	int todayMonth = now.tm_mon + 1; // because it start at 0
+	int todayYear = now.tm_year + 1900; // because it start at 1900
+
 	do {
 		tf = 0;
 		cout << "Departure date (dd/mm/yyyy) : ";
@@ -396,9 +404,14 @@ Order ticket(Order*orders)
 		else {
 			int maxDay = days_inMonth[month];
 			if (day <1 || day > days_inMonth[month]) tf = 1;
-			if (day < 1 || day > maxDay || year < 2025 || year > 2029) tf = 1;
+			if (day < 1 || day > maxDay || year > 2029) tf = 1;
 		}
 		if (tf)cout << "Invalid date\n";
+
+		else if (year < todayYear || month < todayMonth || day < todayDay) {
+			cout << "The date can't be at the past.\n";
+			tf = 1;
+		}
 	} while (tf != 0);
 
 	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
