@@ -581,7 +581,7 @@ int main()
 {
 	char menu_choose = '0', choice1, choice2;
 	user users[100];
-	Order orders[100]; // store up to ? orders
+	Order orders[100]; // store up to 100 orders
 
 	cout << "    __________   ========  |      __      |   =====       \n";
 	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
