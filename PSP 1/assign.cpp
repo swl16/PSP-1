@@ -246,6 +246,13 @@ Order ticket(Order*orders)
 	double money = 0.0, price = 0.0;
 	string date1,origin,destination;
 
+	time_t timenow = time(0);
+	struct tm now;
+	localtime_s(&now, &timenow);
+
+	int todayDay = now.tm_mday;
+	int todayMonth = now.tm_mon + 1; // because it start at 0
+	int todayYear = now.tm_year + 1900; // because it start at 1900
 	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 
 	cout << "AVAILABLE TRAIN:\n\n";
@@ -272,6 +279,32 @@ Order ticket(Order*orders)
 
 	switch (trainno) {
 	case 1:
+		do {
+			tf = 0;
+			cout << "Departure date (dd/mm/yyyy) : ";
+			if (!(cin >> day >> dash1 >> month >> dash2 >> year)) {
+				cout << "Invalid date.\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				tf = 1;
+				continue;
+			}
+			if (month < 1 || month > 12) tf = 1;
+			else {
+				int maxDay = days_inMonth[month];
+				if (day <1 || day > days_inMonth[month]) tf = 1;
+				if (day < 1 || day > maxDay || year > 2029) tf = 1;
+			}
+			if (tf)cout << "Invalid date\n";
+
+			else if (year < todayYear || month < todayMonth || day < todayDay) {
+				cout << "The date can't be at the past.\n";
+				tf = 1;
+			}
+		} while (tf != 0);
+
+		cout << endl;
+
 		origin = "Kuala Lumpur";
 		destination = "Butterworth";
 		cout << left << setw(5) << "==================================" << endl;
@@ -307,6 +340,32 @@ Order ticket(Order*orders)
 		} while (deptime < 1 || deptime>3);
 		break;
 	case 2:
+		do {
+			tf = 0;
+			cout << "Departure date (dd/mm/yyyy) : ";
+			if (!(cin >> day >> dash1 >> month >> dash2 >> year)) {
+				cout << "Invalid date.\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				tf = 1;
+				continue;
+			}
+			if (month < 1 || month > 12) tf = 1;
+			else {
+				int maxDay = days_inMonth[month];
+				if (day <1 || day > days_inMonth[month]) tf = 1;
+				if (day < 1 || day > maxDay || year > 2029) tf = 1;
+			}
+			if (tf)cout << "Invalid date\n";
+
+			else if (year < todayYear || month < todayMonth || day < todayDay) {
+				cout << "The date can't be at the past.\n";
+				tf = 1;
+			}
+		} while (tf != 0);
+
+		cout << endl;
+
 		origin = "Kajang";
 		destination = "JB Sentral";
 		cout << left << setw(5) << "==================================" << endl;
@@ -342,6 +401,32 @@ Order ticket(Order*orders)
 		} while (deptime1 < 1 || deptime1>3);
 		break;
 	case 3:
+		do {
+			tf = 0;
+			cout << "Departure date (dd/mm/yyyy) : ";
+			if (!(cin >> day >> dash1 >> month >> dash2 >> year)) {
+				cout << "Invalid date.\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				tf = 1;
+				continue;
+			}
+			if (month < 1 || month > 12) tf = 1;
+			else {
+				int maxDay = days_inMonth[month];
+				if (day <1 || day > days_inMonth[month]) tf = 1;
+				if (day < 1 || day > maxDay || year > 2029) tf = 1;
+			}
+			if (tf)cout << "Invalid date\n";
+
+			else if (year < todayYear || month < todayMonth || day < todayDay) {
+				cout << "The date can't be at the past.\n";
+				tf = 1;
+			}
+		} while (tf != 0);
+
+		cout << endl;
+
 		origin = "KL Sentral";
 		destination = "Ipoh";
 		cout << left << setw(5) << "==================================" << endl;
@@ -380,41 +465,8 @@ Order ticket(Order*orders)
 		cout << "Invalid";
 		break;
 	}
-	cout << endl;
-
-	time_t timenow = time(0);
-	struct tm now;
-	localtime_s(&now, &timenow);
-
-	int todayDay = now.tm_mday;
-	int todayMonth = now.tm_mon + 1; // because it start at 0
-	int todayYear = now.tm_year + 1900; // because it start at 1900
-
-	do {
-		tf = 0;
-		cout << "Departure date (dd/mm/yyyy) : ";
-		if (!(cin >> day >> dash1 >> month >> dash2 >> year)) {
-			cout << "Invalid date.\n";
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			tf = 1;
-			continue;
-		}
-		if (month < 1 || month > 12) tf = 1;
-		else {
-			int maxDay = days_inMonth[month];
-			if (day <1 || day > days_inMonth[month]) tf = 1;
-			if (day < 1 || day > maxDay || year > 2029) tf = 1;
-		}
-		if (tf)cout << "Invalid date\n";
-
-		else if (year < todayYear || month < todayMonth || day < todayDay) {
-			cout << "The date can't be at the past.\n";
-			tf = 1;
-		}
-	} while (tf != 0);
-
 	date1 = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+	cout << endl;
 
 	do {
 		cout << "Number of pax : ";
@@ -439,6 +491,7 @@ Order ticket(Order*orders)
 	cout << "\nTICKET CONFIRMATION" << endl;
 	cout << "--------------------" << endl;
 	cout << "Train No : " << trainno << endl;
+	cout << "Departure Date : " << date1 << endl;
 	cout << "Departure Time : " << time1 << ":00";
 	if (time1 >= 12) {
 		cout << " PM\n";
@@ -446,7 +499,6 @@ Order ticket(Order*orders)
 	else {
 		cout << " AM\n";
 	}
-	cout << "Departure Date : " << date1 << endl;
 	cout << "Number of pax : " << pax << endl;
 	price = money * pax;
 	cout << "Price : RM " << price << endl;
