@@ -13,7 +13,7 @@ using namespace std;
 const double process = 0.50;
 const double tax = 0.06;
 
-int userCount = 0;
+int userCount = 0; 
 
 string loggedInUser = "";
 
@@ -24,7 +24,7 @@ double fare[] = { 50.00,56.00,96.00 };
 
 int orderCount = 0;
 
-void saveusers(user* users) {
+void saveusers(user* users) {    // save users data to file
 	const string filename = "users.txt";
 	ofstream out(filename);
 	if (!out) {
@@ -37,7 +37,7 @@ void saveusers(user* users) {
 	out.close();
 }
 
-void usersfromfile(user*users){
+void usersfromfile(user*users){          // reads users data from file
 	const string filename = "users.txt";
 	ifstream in(filename);
 	if (!in) {
@@ -50,7 +50,7 @@ void usersfromfile(user*users){
 	in.close();
 }
 
-void saveorders(Order*orders)
+void saveorders(Order*orders)  // save orders that ordered by the user to file
 {
 	const string filename = "orders.txt";
 	ofstream out(filename);
@@ -66,7 +66,7 @@ void saveorders(Order*orders)
 	out.close();
 }
 
-void ordersfromfile(Order*orders)
+void ordersfromfile(Order*orders)  // reads user's orders from file
 {
 	const string filename = "orders.txt";
 	ifstream in(filename);
@@ -83,7 +83,7 @@ void ordersfromfile(Order*orders)
 	in.close();
 }
 
-void displayMenu() {
+void displayMenu() {     // menu navigation for user to register/login
 	if (loggedInUser.empty()) {
 		cout << "Status: Not Logged In\n";
 	}
@@ -99,7 +99,7 @@ void displayMenu() {
 }
 
 
-void registerUser(user*users) {
+void registerUser(user*users) {   // user registration 
 
 		cout << "\n--- User Registration ---\n";
 		user registeringUser = user();
@@ -141,7 +141,7 @@ void registerUser(user*users) {
 	cin.get();
 }
 
-int loginUser(user*users) {
+int loginUser(user*users) {    // user login
 	cout << "\n--- User Login ---\n";
 
 	if (!loggedInUser.empty()) {
@@ -185,7 +185,7 @@ void clearScreen() {
 #endif
 }
 
-void logoutUser() {
+void logoutUser() {    //user logout
 	cout << "\n--- User Logout ---\n";
 
 	if (loggedInUser.empty()) {
@@ -197,7 +197,7 @@ void logoutUser() {
 	}
 }
 
-void resetPassword(user*users) {
+void resetPassword(user*users) {   // user reset password
 	cout << "\n--- Password Reset ---\n";
 
 	string username;
@@ -224,7 +224,7 @@ void resetPassword(user*users) {
 	}
 }
 
-void Menu() {
+void Menu() {     //menu navigation for user to buy train ticket/view order history
 
 	cout << "\nWelcome to TWD Train Ticket Booking System!\n";
 	cout << "1. BUY TICKET \n";
@@ -235,9 +235,9 @@ void Menu() {
 }
 
 
-Order ticket(Order*orders)
+Order ticket(Order*orders)   //function for ordering ticket 
 {
-	char dash1, dash2, tf;
+	char dash1, dash2, tf; // tf=truefalse
 	int trainno, deptime, deptime1, deptime2, pax ;
 	int time1=0,day, month, year;
 	double money = 0.0, price = 0.0;
@@ -470,7 +470,7 @@ Order ticket(Order*orders)
 		}
 	} while (pax > 30);
 
-	Order newOrder;
+	Order newOrder;  
 	newOrder.trainno = trainno;
 	newOrder.date = date1;
 	newOrder.pax = pax;
@@ -500,7 +500,7 @@ Order ticket(Order*orders)
 	return newOrder;
 }
 
-double invoice(int start, int end, Order*orders)
+double invoice(int start, int end, Order*orders) // print invoice 
 {
 	double total = 0.0, amount = 0.0, tax1 = 0.0, subtotal=0.0;
 	int totalticket=0;
@@ -528,7 +528,7 @@ double invoice(int start, int end, Order*orders)
 }
 
 
-void orderhistory(Order*orders)
+void orderhistory(Order*orders) // print order history
 {
 	if (orderCount == 0) {
 		cout << "\nNo previous orders found.\n";
@@ -677,7 +677,7 @@ int main()
 						receipt = rand() % 9999 + 1000;
 
 						cout << "===============================\n";
-						cout << setw(10) << "RECEIPT" << endl;
+						cout << setw(10) << "RECEIPT" << endl;            //print receipt
 						cout << "===============================\n";
 						cout << "Receipt No : " << receipt << endl;
 						cout << "Date : " << localTime.tm_mday << "/"
