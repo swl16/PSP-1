@@ -294,7 +294,7 @@ Order ticket(Order*orders)   //function for ordering ticket
 			if (tf)cout << "Invalid date\n";
 
 			else if  (year < todayYear ||(year == todayYear && month < todayMonth) ||(year == todayYear && month == todayMonth && day < todayDay)) {
-				cout << "The date can't be at the past.\n";
+				cout << "The date can't be in the past.\n";
 				tf = 1;
 			}
 		} while (tf != 0);
