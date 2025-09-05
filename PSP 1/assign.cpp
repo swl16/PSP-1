@@ -530,6 +530,7 @@ double invoice(int start, int end, Order*orders)
 
 void orderhistory(Order*orders)
 {
+	ordersfromfile(orders);
 	if (orderCount == 0) {
 		cout << "\nNo previous orders found.\n";
 		return;
