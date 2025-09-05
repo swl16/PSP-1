@@ -677,17 +677,17 @@ int main()
 						receipt = rand() % 9999 + 1000;
 
 						cout << "===============================\n";
-						cout << setw(10) << "RECEIPT" << endl;            //print receipt
+						cout << "            RECEIPT" << endl;            //print receipt
 						cout << "===============================\n";
 						cout << "Receipt No : " << receipt << endl;
 						cout << "Date : " << localTime.tm_mday << "/"
 							<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 						cout << endl;
 						double total = invoice(start, orderCount, orders);
-						cout << "------------------------------------------------------------------------------------\n";
+						cout << "---------------------------------------------------------\n";
 						cout << "Payment menthod : " << method << endl;
 						cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
-						cout << "------------------------------------------------------------------------------------\n";
+						cout << "---------------------------------------------------------\n";
 						cout << "THANK YOU.\n";
 
 						cout << "\nPress ENTER to continue.";
