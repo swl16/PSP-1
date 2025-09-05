@@ -6,13 +6,15 @@
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
+#include <sstream>
 
 #include "Structs.hpp"
 using namespace std;
 
 const double process = 0.50;
 const double tax = 0.06;
-
+const int MAX_ORDERS = 100;
+const int MAX_USERS = 100;
 int userCount = 0; 
 
 string loggedInUser = "";
@@ -27,12 +29,14 @@ int orderCount = 0;
 void saveusers(user* users) {    // save users data to file
 	const string filename = "users.txt";
 	ofstream out(filename);
+
 	if (!out) {
 		cout << "Error opening file for saving users!" << endl;
+		return;
 	}
 	for (int i = 0;i < userCount;i++)
 	{
-		out << users[i].usernames << " " << users[i].passwords << endl;
+		out << users[i].usernames << "," << users[i].passwords << endl;
 	}
 	out.close();
 }
@@ -40,11 +44,20 @@ void saveusers(user* users) {    // save users data to file
 void usersfromfile(user*users){          // reads users data from file
 	const string filename = "users.txt";
 	ifstream in(filename);
+	user userinfor = user();
+
 	if (!in) {
 		return;
 	}
 	userCount = 0;
-	while (in >> users[userCount].usernames >> users[userCount].passwords) {
+	string line;
+	while (getline(in, line) && userCount < MAX_USERS) {
+		stringstream ss(line);
+
+		getline(ss, userinfor.usernames, ',');
+		getline(ss, userinfor.passwords, ',');
+
+		users[userCount] = userinfor;
 		userCount++;
 	}
 	in.close();
@@ -54,14 +67,15 @@ void saveorders(Order*orders)  // save orders that ordered by the user to file
 {
 	const string filename = "orders.txt";
 	ofstream out(filename);
+
 	if (!out) {
 		cout << "Error opening file for saving orders!" << endl;
 		return;
 	}
 	for (int i = 0;i < orderCount;i++)
 	{
-		out << orders[i].trainno << " " << orders[i].origin << " " << orders[i].destination << " "
-			<< orders[i].date << " " << orders[i].time << " " << orders[i].pax << " " << orders[i].money << " " << orders[i].username << endl;
+		out << orders[i].trainno << "," << orders[i].origin << "," << orders[i].destination << ","
+			<< orders[i].date << "," << orders[i].time << "," << orders[i].pax << "," << orders[i].money << "," << orders[i].username << endl;
 	}
 	out.close();
 }
@@ -70,14 +84,37 @@ void ordersfromfile(Order*orders)  // reads user's orders from file
 {
 	const string filename = "orders.txt";
 	ifstream in(filename);
+	Order ordering = Order();
 	if (!in) {
 		cout << "Error opening orders.txt";
 		return;
 	}
 	orderCount = 0;
+	string line;
+	string trainnostr, paxstr, moneystr, timestr;
+	while (getline(in, line) && orderCount < MAX_ORDERS)
+	{
+		stringstream ss(line);
+		getline(ss, trainnostr, ',');   // convert later
+		getline(ss,ordering.origin,',');
+		getline(ss,ordering.destination,',');
+		getline(ss,ordering.date,',');
+		getline(ss,timestr,',');   // time as string, convert later
+		getline(ss,paxstr,',');    // pax, as string, convert later
+		getline(ss,moneystr,',');  //money as string, convert later
+		getline(ss,ordering.username,',');
 
-	while (in >> orders[orderCount].trainno >> orders[orderCount].origin >> orders[orderCount].destination
-		>> orders[orderCount].date >> orders[orderCount].time >> orders[orderCount].pax >> orders[orderCount].money >> orders[orderCount].username) {
+		try {
+			ordering.trainno = stoi(trainnostr); // string to int
+			ordering.time = stoi(timestr);
+			ordering.pax = stoi(paxstr);
+			ordering.money = stod(moneystr);  //string to double
+		}
+		catch (...) {
+			cout << "Error: Invalid data format in line " << orderCount + 1 << endl;
+			continue; // Skip this line
+		}
+		orders[orderCount] = ordering;
 		orderCount++;
 	}
 	in.close();
