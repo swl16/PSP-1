@@ -203,7 +203,7 @@ int loginUser(user*users) {    // user login
 		return 1;
 	}
 	else {
-		cout << "Invalid username or password. Please try again.\n";
+		cout << "Invalid username or password. Please try again.\n\n";
 		return 0;
 	}
 	return 0;
