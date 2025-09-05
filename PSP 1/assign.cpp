@@ -136,9 +136,6 @@ void registerUser(user*users) {   // user registration
 
 		cout << "Registration successful!\n";
 
-	cout << "\nPress ENTER to continue.";
-	cin.ignore();
-	cin.get();
 }
 
 int loginUser(user*users) {    // user login
