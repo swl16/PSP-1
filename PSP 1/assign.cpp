@@ -19,7 +19,7 @@ string loggedInUser = "";
 
 char choice;
 
-int dtime[] = { 10, 11, 12, 13, 14, 15, 16 };
+int dtime[] = { 10, 11, 12, 13, 14, 15, 16 }; //departure time
 double fare[] = { 50.00,56.00,96.00 };
 
 int orderCount = 0;
@@ -173,11 +173,9 @@ int loginUser(user*users) {    // user login
 }
 
 void clearScreen() {
-	// Check if the system is Windows
-#ifdef _WIN32
-	system("cls");
-	// Otherwise, assume it's a POSIX-compliant system (like Linux or macOS)
-#else
+#ifdef _WIN32 // Check if the system is Windows
+	system("cls");	
+#else // Otherwise, assume it's a POSIX-compliant system (like Linux or macOS)
 	system("clear");
 #endif
 }
@@ -234,7 +232,7 @@ void Menu() {     //menu navigation for user to buy train ticket/view order hist
 
 Order ticket(Order*orders)   //function for ordering ticket 
 {
-	char dash1, dash2, tf; // tf=truefalse
+	char dash1, dash2, tf; // tf=truefalse, dash is to store the '/' that input by user
 	int trainno, deptime, deptime1, deptime2, pax ;
 	int time1=0,day, month, year;
 	double money = 0.0, price = 0.0;
@@ -247,7 +245,7 @@ Order ticket(Order*orders)   //function for ordering ticket
 	int todayDay = now.tm_mday;
 	int todayMonth = now.tm_mon + 1; // because it start at 0
 	int todayYear = now.tm_year + 1900; // because it start at 1900
-	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	int days_inMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 }; // put 0 at the 1st value to let the day store in correct month
 
 	cout << "AVAILABLE TRAIN:\n\n";
 	cout << left << setw(10) << "=========================================" << endl;
@@ -260,7 +258,7 @@ Order ticket(Order*orders)   //function for ordering ticket
 	do {
 		cout << "\nPlease choose your train number : ";
 		cin >> trainno;
-		if (cin.fail())
+		if (cin.fail()) 
 		{
 			cin.clear();
 			cin.ignore();
@@ -284,14 +282,16 @@ Order ticket(Order*orders)   //function for ordering ticket
 				continue;
 			}
 			if (month < 1 || month > 12) tf = 1;
+			if (year == 2028)
+				days_inMonth[2] = 29; // In 2028, february has 29 days
 			else {
 				int maxDay = days_inMonth[month];
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
 
-			else if (year < todayYear || month < todayMonth || day < todayDay) {
-				cout << "The date can't be at the past.\n";
+			else if  (year < todayYear ||(year == todayYear && month < todayMonth) ||(year == todayYear && month == todayMonth && day < todayDay)) {
+				cout << "The date can't be in the past.\n";
 				tf = 1;
 			}
 		} while (tf != 0);
@@ -344,13 +344,15 @@ Order ticket(Order*orders)   //function for ordering ticket
 				continue;
 			}
 			if (month < 1 || month > 12) tf = 1;
+			if (year == 2028)
+				days_inMonth[2] = 29;
 			else {
 				int maxDay = days_inMonth[month];
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
 
-			else if (year < todayYear || month < todayMonth || day < todayDay) {
+			else if (year < todayYear || (year == todayYear && month < todayMonth) || (year == todayYear && month == todayMonth && day < todayDay)) {
 				cout << "The date can't be at the past.\n";
 				tf = 1;
 			}
@@ -404,13 +406,15 @@ Order ticket(Order*orders)   //function for ordering ticket
 				continue;
 			}
 			if (month < 1 || month > 12) tf = 1;
+			if (year == 2028)
+				days_inMonth[2] = 29;
 			else {
 				int maxDay = days_inMonth[month];
 				if (day < 1 || day > maxDay || year > 2029) tf = 1;
 			}
 			if (tf)cout << "Invalid date\n";
 
-			else if (year < todayYear || month < todayMonth || day < todayDay) {
+			else if (year < todayYear || (year == todayYear && month < todayMonth) || (year == todayYear && month == todayMonth && day < todayDay)) {
 				cout << "The date can't be at the past.\n";
 				tf = 1;
 			}
