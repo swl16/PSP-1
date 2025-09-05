@@ -568,6 +568,7 @@ double invoice(int start, int end, Order*orders) // print invoice
 
 void orderhistory(Order*orders) // print order history
 {
+	int ordernum = 1;
 	if (orderCount == 0) {
 		cout << "\nNo previous orders found.\n";
 		return;
@@ -585,8 +586,7 @@ void orderhistory(Order*orders) // print order history
 			double subtotal = orders[i].money * orders[i].pax;
 			double tax1 = subtotal * tax;
 			double total = subtotal + process + tax1;
-
-			cout << "Order #" << (i + 1) << endl;
+			cout << "Order #" << ordernum << endl;
 			cout << "Train No : " << orders[i].trainno << "  " << orders[i].origin << " --> " << orders[i].destination << endl;
 			cout << "Departure Date : " << orders[i].date << endl;
 			cout << "Departure Time : " << orders[i].time << ":00";
@@ -600,6 +600,8 @@ void orderhistory(Order*orders) // print order history
 			cout << "Price per ticket : RM " << fixed << setprecision(2) << orders[i].money << endl;
 			cout << "Total payable amount : RM " << total << endl;
 			cout << "---------------------------------\n";
+
+			ordernum++;
 		}
 	}
 	if (!found) {
