@@ -200,6 +200,9 @@ int loginUser(user*users) {    // user login
 
 	if (found) {
 		cout << "Login successful. Welcome, " << loggedInUser << "!\n";
+		cout << "\nPress enter to continue.\n";
+		cin.ignore();
+		cin.get();
 		return 1;
 	}
 	else {
