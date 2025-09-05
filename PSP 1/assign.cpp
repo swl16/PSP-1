@@ -160,7 +160,7 @@ void registerUser(user*users) {   // user registration
 				break; // Valid username found
 			}
 			cout << "\nPress ENTER to continue.";
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');    // Proper buffer clearing
 			cin.get();
 		}
 		cout << "Enter a new password: ";
@@ -298,7 +298,7 @@ Order ticket(Order*orders)   //function for ordering ticket
 		if (cin.fail()) 
 		{
 			cin.clear();
-			cin.ignore();
+			cin.ignore();  //only ignores 1 character
 		}
 		if (trainno <1 || trainno > 3) {
 			cout << "Invalid train number. Please try again. \n";
