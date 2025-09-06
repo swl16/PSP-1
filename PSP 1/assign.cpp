@@ -682,7 +682,7 @@ int main()  // main program
 						int payment;
 						string method;
 						do {
-							cout << "\nPlease select your payment menthod." << endl;
+							cout << "\nPlease select your payment method." << endl;
 							cout << "1. E-wallet" << endl;
 							cout << "2. Credit card" << endl;
 							cout << "3. Debit card" << endl;
