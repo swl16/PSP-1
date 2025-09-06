@@ -124,10 +124,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="assign.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OrderClass.hpp" />
     <ClInclude Include="Structs.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

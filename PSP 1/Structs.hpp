@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct user {  //template
+struct user {                        //template
 	string usernames;
 	string passwords;
 };
