@@ -729,7 +729,7 @@ int main()  // main program
 						cout << endl;
 						double total = invoice(start, orderCount, orders);
 						cout << "---------------------------------------------\n";
-						cout << "Payment menthod : " << method << endl;
+						cout << "Payment method : " << method << endl;
 						cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
 						cout << "---------------------------------------------\n";
 						cout << "THANK YOU.\n";
