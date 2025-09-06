@@ -1,7 +1,0 @@
-1,Kuala Lumpur,Butterworth,12/12/2025,10,1,96,tang
-1,Kuala Lumpur,Butterworth,19/10/2025,12,2,96,tang
-1,Kuala Lumpur,Butterworth,12/10/2025,15,1,96,tang
-1,Kuala Lumpur,Butterworth,12/12/2025,10,1,96,tang
-3,KL Sentral,Ipoh,20/10/2025,11,2,56,darwin
-1,Kuala Lumpur,Butterworth,12/12/2025,10,1,96,darwin
-2,Kajang,JB Sentral,2/2/2026,10,1,50,darwin
