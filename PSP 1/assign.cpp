@@ -11,20 +11,21 @@
 #include "Structs.hpp"
 using namespace std;
 
-const double process = 0.50;
-const double tax = 0.06;
+const double process = 0.50; // processing fee
+const double tax = 0.06;    // tax rate
 const int MAX_ORDERS = 100;
 const int MAX_USERS = 100;
-int userCount = 0; 
+ 
 
-string loggedInUser = "";
+string loggedInUser = ""; // stores currently logged-in username
 
 char choice;
 
 int dtime[] = { 10, 11, 12, 13, 14, 15, 16 }; //departure time
 double fare[] = { 50.00,56.00,96.00 };
 
-int orderCount = 0;
+int userCount = 0;    // tracks number of registered users
+int orderCount = 0;  // tracks number of orders made
 
 void saveusers(user* users) {    // save users data to file
 	const string filename = "users.txt";
@@ -557,11 +558,11 @@ double invoice(int start, int end, Order*orders) // print invoice
 	tax1 = subtotal * tax;
 	total = subtotal + process + tax1;
 
-		cout << "---------------------------------------------------------\n";
+		cout << "---------------------------------------------\n";
 		cout << left << setw(30) << "Subtotal : " << "RM " << subtotal << endl;
 		cout << left << setw(30) << "Processing Fee : " << "RM " << fixed << setprecision(2) << process << endl;
 		cout << left << setw(30) << "Tax : " << "RM " << fixed << setprecision(2) << tax1 << endl;
-		cout << "---------------------------------------------------------\n";
+		cout << "---------------------------------------------\n";
 		cout << left << setw(30) << "Total Tickets : " <<  totalticket << endl;
 		cout << left << setw(30) << "Total payable amount : " << "RM " << fixed << setprecision(2) << total << endl;
 	
@@ -614,15 +615,15 @@ void orderhistory(Order*orders) // print order history
 
 
 
-int main()
+int main()  // main program
 {
 	char menu_choose = '0', choice1, choice2;
-	user users[100];
-	Order orders[100]; // store up to 100 orders
+	user users[100];   // array to store user data
+	Order orders[100]; //  array to store order data
 
 	cout << "    __________   ========  |      __      |   =====       \n";
 	cout << "   / |        |     ||     |     |  |     |  |      \\      \n";
-	cout << "  /--         |     ||     |    |    |    |  |       |   \n";
+	cout << "  /--         |     ||     |    |    |    |  |       |   \n";          // logo
 	cout << "  |           |     ||     |   |      |   |  |       |   \n";
 	cout << "   -----------      ||     |__|        |__|  |______/    \n";
 	cout << "    000   000                                          \n";
@@ -727,10 +728,10 @@ int main()
 							<< (1 + localTime.tm_mon) << "/" << (1900 + localTime.tm_year) << " " << localTime.tm_hour << ":" << localTime.tm_min << endl;
 						cout << endl;
 						double total = invoice(start, orderCount, orders);
-						cout << "---------------------------------------------------------\n";
+						cout << "---------------------------------------------\n";
 						cout << "Payment menthod : " << method << endl;
 						cout << "Payment amount : RM " << fixed << setprecision(2) << total << endl;
-						cout << "---------------------------------------------------------\n";
+						cout << "---------------------------------------------\n";
 						cout << "THANK YOU.\n";
 
 						cout << "\nPress ENTER to continue.";
